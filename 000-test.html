@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  <div id="box">好好学习 天天向上</div>
   <script>
     /**
      * Create a cached version of a pure function.
@@ -26,8 +27,6 @@
     });
     let warn = console.warn
     let error = console.error
-    warn('aaa')
-    error('bbb')
     function query(el) {
       if (typeof el === 'string') {
         var selected = document.querySelector(el);
@@ -42,6 +41,8 @@
         return el
       }
     }
+    console.log(idToTemplate('#box'));
+    console.log(idToTemplate('#box'))
   </script>
 </body>
 

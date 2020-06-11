@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function calc(num) {
+      return num * num
+    }
+
+    function add(num) {
+      return num + num
+    }
+
+    function cached(fn) {
+      var cache = Object.create(null);
+      return function cachedFn(str) {
+        var hit = cache[str];
+        return hit || (cache[str] = fn(str))
+      }
+    }
+    var newCalc = cached(calc);// 返回一个闭包函数
+    console.log(newCalc(10));
+    console.log(newCalc(10));
+
+    var newAdd = cached(add); // 返回一个闭包函数
+    debugger
+    console.log(newAdd(10));
+    console.log(newAdd(10));
+
+  </script>
+</body>
+
+</html>
