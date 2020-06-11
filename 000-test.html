@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * Create a cached version of a pure function.
+     */
+
+    function cached(fn) {
+      var cache = Object.create(null);
+      return function cachedFn(str) {
+        var hit = cache[str];
+        return hit || (cache[str] = fn(str))
+      }
+    }
+    var idToTemplate = cached(function (id) {
+      var el = query(id);
+      return el && el.innerHTML
+    });
+    let warn = console.warn
+    let error = console.error
+    warn('aaa')
+    error('bbb')
+    function query(el) {
+      if (typeof el === 'string') {
+        var selected = document.querySelector(el);
+        if (!selected) {
+          warn(
+            'Cannot find element: ' + el
+          );
+          return document.createElement('div')
+        }
+        return selected
+      } else {
+        return el
+      }
+    }
+  </script>
+</body>
+
+</html>

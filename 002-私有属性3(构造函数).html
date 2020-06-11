@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Person() {
+      var name = '张三';
+
+      function display() {
+        console.log('姓名', name);
+      }
+      // 特权方法
+      // getName是一个闭包 
+      Person.prototype.getName = function () {
+        return name
+      }
+      // setName是一个闭包
+      Person.prototype.setName = function (val) {
+        name = val;
+      }
+    }
+
+    // 对象p
+    var p = new Person();
+    // 对象p2
+    var p2 = new Person();
+
+    console.log(p.getName()); // 张三
+    p.setName('乔峰');
+    console.log(p.getName()); // 乔峰
+
+    console.log(p2.getName()); // 乔峰
+  </script>
+</body>
+
+</html>

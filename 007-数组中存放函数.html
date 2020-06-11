@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [() => {
+      console.log(1)
+    }, () => {
+      console.log(2)
+    }]
+    let res = arr.slice()
+    let res2 = arr.slice(0)
+    console.log(res, res2)
+
+
+    let arr2 = ['a', 'b', 'c']
+    // 倒着循环
+    let i = arr2.length
+    while(i--) {
+      console.log(arr2[i])
+    }
+    /* let j = 0
+    while (j++) {
+      console.log(arr2[j])
+    } */
+  </script>
+</body>
+
+</html>

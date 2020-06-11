@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Person() {
+      var name = '张三';
+
+      function display() {
+        console.log('姓名:', name);
+      }
+      // 特权方法
+      this.getName = function () {
+        return name;
+      }
+      // 特权方法
+      this.setName = function (val) {
+        name = val
+      }
+      // 特权方法
+      this.display = display
+    }
+
+    // 对象p
+    var p = new Person();
+    // 对象p2
+    var p2 = new Person();
+
+    console.log(p.getName()); // 张三
+    p.setName('乔峰');
+    console.log(p.getName()); // 乔峰
+    p.display(); //  姓名: 乔峰
+    
+    console.log(p2.getName()); // 张三
+    p2.setName('杨过');
+    console.log(p2.getName()); // 杨过
+    p2.display(); // 姓名：杨过
+  </script>
+</body>
+
+</html>

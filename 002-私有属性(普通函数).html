@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function fn() {
+      // 私有属性
+      var name = '张三';
+      // 私有方法
+      function display() {
+        console.log('姓名:',name);
+      }
+      
+      return {
+        // 特权方法
+        getName: function () {
+          return name;
+        },
+        // 特权方法
+        setName: function (val) {
+          name = val;
+        },
+        // 特权方法
+        display: display
+      }
+    }
+
+    var a = fn();
+    console.log(a.getName());
+    a.setName('乔峰');
+    console.log(a.getName());
+    a.display();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var color = "red";
+
+    function fn() {
+      return this.color;
+    }
+    var obj = {
+      color: "yellow",
+      fn: function () {
+        var self = this
+        return function () { //返回匿名函数
+          return self.color;
+        }
+      }
+    }
+    console.log(fn()); //red  在外部直接调用this为window
+    var b = obj.fn(); //b为window下的变量,获得的值为obj对象下的fn方法返回的匿名函数
+    console.log(b()); // yellow 因为是在window环境下运行，所以this指缶的是window
+  </script>
+</body>
+
+</html>
