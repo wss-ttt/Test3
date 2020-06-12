@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>触发事件</button>
+  <script>
+    function Vue() {}
+
+    function set (target, key, val) {
+      // 如果是数组
+      if (Array.isArray(target) && isValidArrayIndex(key)) {
+        target.splice(key, 1, val);
+        return val;
+      }
+      target[key] = val;
+      return val;
+    }
+    Vue.prototype.$set = set;
+    var vm = new Vue();
+    var p = [];
+    vm.$set(p, 'name', '乔峰');
+    vm.$set(p, 'age', 18);
+    vm.$set(p, 'name', '杨过');
+    console.log(p);
+
+    function isValidArrayIndex(val) {
+      var n = parseFloat(String(val));
+      return n >= 0 && Math.floor(n) === n && isFinite(val)
+    }
+  </script>
+</body>
+
+</html>
