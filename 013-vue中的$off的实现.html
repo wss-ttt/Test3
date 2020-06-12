@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>监听事件</button>
+  <button>触发事件</button>
+  <button>移除事件</button>
+  <script>
+    function Vue() {
+      this._events = {}
+    }
+
+    Vue.prototype.$on = function (eventName, fn) {
+      var vm = this;
+      // 1.判断是不是是数组
+      if (Array.isArray(eventName)) {
+        // 2.如果是数组的话
+        for (var i = 0; i < eventName.length; i++) {
+          vm.$on(eventName[i], fn)
+        }
+      } else {
+
+        (vm._events[eventName] || (vm._events[eventName] = [])).push(fn);
+
+        // 等价于
+        /* if (vm._events[eventName]) {
+          vm._events[eventName].push(fn);
+        } else {
+          vm._events[eventName] = [];
+          vm._events[eventName].push(fn);
+        } */
+      }
+    }
+
+    Vue.prototype.$emit = function (eventName) {
+      var vm = this;
+      var cbs = vm._events[eventName];
+      if (cbs) {
+        // 截取参数(从第二个开始)
+        var args = [].slice.call(arguments, 1); // tips: 此时args变成了数组
+        for (var i = 0, l = cbs.length; i < l; i++) {
+          cbs[i].apply(null, args);
+        }
+      }
+    }
+
+    /**
+     *1.如果没有提供参数，则移除所有的事件监听器
+      2.如果只提供了事件名，则移除该事件所有的监听器
+      3.如果同时提供了事件名与回调函数，则只移除这个指定的事件名的指定回调函数
+     * **/
+    Vue.prototype.$off = function (eventName, fn) {
+      var vm = this;
+      // 1.如果没有提供参数,则移除所有的时间监听器
+      if (!arguments.length) {
+        // 直接清空
+        vm._events = Object.create(null);
+        // vm._events = {};
+        return vm;
+      }
+      // 如果eventName是个数组,需要递归调用
+      if (Array.isArray(eventName)) {
+        for (var i = 0, len = eventName.length; i < len; i++) {
+          vm.$off(eventName[i], fn);
+        }
+        return vm;
+      }
+      var cbs = vm._events[eventName]
+      // 如果不存在该该事件名直接返回vm
+      if (!cbs) {
+        return vm;
+      }
+      // 2.如果只提供了事件名,则移除该事件所有的监听器
+      if (!fn) {
+        vm._events[eventName] = null;
+        // 或者 清空
+        // vm._events[eventName] = [];
+        return vm;
+      }
+      // 此时需要倒着遍历
+      var index = cbs.length;
+      var cb;
+      while (index--) {
+        cb = cbs[index];
+        // 如果存在同名的,就进行删除掉
+        if (cb === fn) {
+          cbs.splice(index, 1);
+        }
+      }
+      return vm;
+    }
+  </script>
+  <script>
+    var btns = document.getElementsByTagName('button');
+    var vm = new Vue();
+    // 1.监听事件
+    btns[0].onclick = function () {
+      // 监听事件
+      vm.$on('on-a', function (data) {
+        console.log(data);
+      })
+      // 监听事件(可以是个数组)
+      vm.$on(['on-b', 'on-c'], function (data) {
+        console.log(data);
+      });
+
+      vm.$on('on-d', test);
+      vm.$on('on-d', test2);
+    }
+
+    function test() {
+      console.log('test')
+    }
+
+    function test2() {
+      console.log('test2')
+    }
+
+    // 2.触发事件
+    btns[1].onclick = function () {
+      // 触发事件
+      vm.$emit('on-a', '哈哈')
+      vm.$emit('on-b', '我是自定义事件on-b');
+      vm.$emit('on-c', '我是自定义事件on-c');
+      vm.$emit('on-d');
+    };
+
+    // 3.移除事件
+    btns[2].onclick = function () {
+      // 1.移除该实例对象上的所有事件监听器
+      // vm.$off();
+      // 2.只提供自定义的事件名
+      // vm.$off('on-a');
+      // 也可以是个数组
+      // vm.$off(['on-a', 'on-b']);
+      // 3.移除指定事件类型的指定回调函数
+      vm.$off('on-d', test);
+    }
+  </script>
+</body>
+
+</html>
