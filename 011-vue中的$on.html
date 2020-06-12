@@ -9,6 +9,7 @@
 
 <body>
   <script>
+    // 监听当前实例对象上的自定义事件
     Vue.prototype.$on = function (event, fn) {
       var vm = this;
       if (Array.isArray(event)) {
@@ -21,6 +22,32 @@
         // instead of a hash lookup
         if (hookRE.test(event)) {
           vm._hasHookEvent = true;
+        }
+      }
+      return vm
+    };
+    // 触发事件
+    Vue.prototype.$emit = function (event) {
+      var vm = this; 
+      {
+        var lowerCaseEvent = event.toLowerCase();
+        if (lowerCaseEvent !== event && vm._events[lowerCaseEvent]) {
+          tip(
+            "Event \"" + lowerCaseEvent + "\" is emitted in component " +
+            (formatComponentName(vm)) + " but the handler is registered for \"" + event + "\". " +
+            "Note that HTML attributes are case-insensitive and you cannot use " +
+            "v-on to listen to camelCase events when using in-DOM templates. " +
+            "You should probably use \"" + (hyphenate(event)) + "\" instead of \"" + event + "\"."
+          );
+        }
+      }
+      var cbs = vm._events[event];
+      if (cbs) {
+        cbs = cbs.length > 1 ? toArray(cbs) : cbs;
+        var args = toArray(arguments, 1);
+        var info = "event handler for \"" + event + "\"";
+        for (var i = 0, l = cbs.length; i < l; i++) {
+          invokeWithErrorHandling(cbs[i], vm, args, vm, info);
         }
       }
       return vm

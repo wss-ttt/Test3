@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>触发事件</button>
+  <script>
+    function Vue() {
+      this._events = {}
+    }
+
+    Vue.prototype.$on = function (eventName, fn) {
+      var vm = this;
+      // 1.判断是不是是数组
+      if (Array.isArray(eventName)) {
+        // 2.如果是数组的话
+        for (var i = 0; i < eventName.length; i++) {
+          vm.$on(eventName[i], fn)
+        }
+      } else {
+        
+        (vm._events[eventName] || (vm._events[eventName] = [])).push(fn);
+
+        // 等价于
+        if (vm._events[eventName]) {
+          vm._events[eventName].push(fn);
+        } else {
+          vm._events[eventName] = [];
+          vm._events[eventName].push(fn);
+        }
+      }
+    }
+
+    Vue.prototype.$emit = function (eventName) {
+      var vm = this;
+      var cbs = vm._events[eventName];
+      if (cbs) {
+        // 截取参数(从第二个开始)
+        var args = [].slice.call(arguments, 1); // tips: 此时args变成了数组
+        for (var i = 0, l = cbs.length; i < l; i++) {
+          cbs[i].apply(null, args);
+        }
+      }
+    }
+  </script>
+  <script>
+    var btns = document.getElementsByTagName('button');
+    var vm = new Vue();
+    // 监听事件
+    vm.$on('on-a', function (data) {
+      console.log(data);
+    })
+    // 触发事件
+    btns[0].onclick = function () {
+      vm.$emit('on-a', '哈哈')
+    };
+
+    // 监听事件(可以是个数组)
+    vm.$on(['on-b', 'on-c'], function (data) {
+      console.log(data);
+    });
+    // 触发事件
+    vm.$emit('on-b', '我是自定义事件on-b');
+    vm.$emit('on-c', '我是自定义事件on-c');
+  </script>
+</body>
+
+</html>
