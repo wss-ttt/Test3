@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let o = null
+
+    // console.log(o && o.num === -1 ? '无数据' : o.num ) // 这个代码会报错
+
+    // console.log(o && (o.num === -1 ? '无数据' : o.num) ) // 不会报错 输出 null
+
+    // console.log(o && o === -1 ? '无数据': o) //  不会报错 输出 null
+    console.log(o && o === -1 ? '无数据' : o || '无')
+    // o && (o.num === -1 ? '无数据' : o.num) || '无'
+    // console.log(o && o.num === -1 ? '无数据' : o.num || '无')
+
+
+    // if(o) {
+    //   console.log('走了')
+    //   console.log( o.num === -1 ? '无数据' : o.num)
+    // } else {
+    //   console.log('没走')
+    // }
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="bargraphCanvas" width="500" height="600"></canvas>
+  <script src="jquery.js"></script>
+  <script type="text/javascript">
+    var canvas, context;
+    var img, //图片对象
+      imgIsLoaded, //图片是否加载完成;
+      imgX = 0,
+      imgY = 0,
+      imgScale = 1;
+
+    (function int() {
+      canvas = document.getElementById('bargraphCanvas'); //画布对象
+      context = canvas.getContext('2d'); //画布显示二维图片
+      loadImg();
+    })();
+  </script>
+</body>
+
+</html>

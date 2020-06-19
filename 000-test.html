@@ -10,39 +10,11 @@
 <body>
   <div id="box">好好学习 天天向上</div>
   <script>
-    /**
-     * Create a cached version of a pure function.
-     */
-
-    function cached(fn) {
-      var cache = Object.create(null);
-      return function cachedFn(str) {
-        var hit = cache[str];
-        return hit || (cache[str] = fn(str))
-      }
+    if (!isNaN(0)) {
+      console.log(1)
+    } else {
+      console.log(2)
     }
-    var idToTemplate = cached(function (id) {
-      var el = query(id);
-      return el && el.innerHTML
-    });
-    let warn = console.warn
-    let error = console.error
-    function query(el) {
-      if (typeof el === 'string') {
-        var selected = document.querySelector(el);
-        if (!selected) {
-          warn(
-            'Cannot find element: ' + el
-          );
-          return document.createElement('div')
-        }
-        return selected
-      } else {
-        return el
-      }
-    }
-    console.log(idToTemplate('#box'));
-    console.log(idToTemplate('#box'))
   </script>
 </body>
 

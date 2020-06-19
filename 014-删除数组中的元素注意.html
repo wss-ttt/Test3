@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 1.错误的做法
+    var arr = ['a', 'b', 'c', 'c'];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] === 'c') {
+        arr.splice(i, 1);
+      }
+    }
+    console.log(arr); // ['a', 'b', 'c']
+
+    // 2.正确的做法-使用for进行倒着循环
+    var arr2 = ['a', 'b', 'c', 'c'];
+    for (var j = arr2.length - 1; j >= 0; j--) {
+      if (arr2[j] === 'c') {
+        arr2.splice(j, 1);
+      }
+    }
+    console.log(arr2); // ['a', 'b']
+    // 3.正确的做法-使用while进行倒着循环
+    var arr3 = ['a', 'b', 'c', 'c'];
+    var k = arr3.length;
+    while (k--) {
+      if (arr3[k] === 'c') {
+        arr3.splice(k, 1);
+      }
+    }
+    console.log(arr3);
+  </script>
+</body>
+
+</html>

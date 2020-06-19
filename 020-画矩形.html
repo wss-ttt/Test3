@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <title>55</title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    #canvas {
+      border: 5px solid red;
+    }
+  </style>
+</head>
+
+<body>
+  <img src="images/500x300.jpg" />
+  <canvas id="canvas" width="800" height="800"></canvas>
+
+  <script src="jquery.js"></script>
+  <script>
+    $(function () {
+      var canvas = document.getElementById("canvas");
+      var context = canvas.getContext("2d");
+      var img = document.querySelector('img');
+      var aa = 0;
+      var x, y, m, n;
+      context.drawImage(img, 0, 0, 800, 800);
+
+      // img.onload = function () {
+      //   console.log(this.width, this.height);
+      //   context.drawImage(img, 0, 0, 300, 300);
+      // }
+      canvas.onmousedown = function (e) {
+        var bbox = canvas.getBoundingClientRect();
+        x = e.clientX - bbox.left * (canvas.width / bbox.width);
+        y = e.clientY - bbox.top * (canvas.height / bbox.height);
+        aa = 1;
+        if (aa = 1) {
+          canvas.onmousemove = function (e) {
+            var bbox = canvas.getBoundingClientRect();
+            m = e.clientX - bbox.left * (canvas.width / bbox.width);
+            n = e.clientY - bbox.top * (canvas.height / bbox.height);
+          }
+        }
+        canvas.onmouseup = function (e) {
+          var oo = m - x;
+          var ii = n - y;
+          if (aa = 1) {
+            //                xt(x,y,m,n);//线条
+            lala(x, y, oo, ii); //矩形
+          }
+          aa = 0;
+        };
+      };
+
+      function xt(q, w, e, r) {
+        context.beginPath();
+        context.moveTo(q, w);
+        context.lineTo(e, r);
+        context.stroke();
+      }
+
+      function lala(cc, kk, ss, zz) {
+        context.fillStyle = "rgba(0, 0, 0, .5)";
+        context.fillRect(cc, kk, ss, zz);
+      }
+    })
+  </script>
+
+</body>
+
+</html>
