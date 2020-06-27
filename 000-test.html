@@ -10,11 +10,20 @@
 <body>
   <div id="box">好好学习 天天向上</div>
   <script>
-    if (!isNaN(0)) {
-      console.log(1)
-    } else {
-      console.log(2)
+    let o = {
+      name: 'bbb'
     }
+    let initValue = 'aaa'
+    Object.defineProperty(o, 'name', {
+      get() {
+        return initValue
+      },
+      set(newVal) {
+        initValue = newVal
+      }
+    })
+    console.log(o)
+
   </script>
 </body>
 

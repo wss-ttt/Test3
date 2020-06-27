@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="main"></div>
+  <button type="button">改变数据</button>
+  <script>
+    function isObject(obj) {
+      return obj.constructor === Object
+    }
+
+    function updateView() { // 更新响应
+      var main = document.querySelector('#main')
+      main.innerHTML = obj.a
+    }
+
+    function observer(obj) { // 监测对象
+      if (!isObject(obj)) return
+      for (let key in obj) { // 对每个属性进行 Object.defineProperty 定义
+        defineReactive(obj, key, obj[key])
+      }
+    }
+
+    function defineReactive(obj, key, value) { // 数据劫持
+      observer(value) // 利用递归进行深度劫持 如果value是对象，继续定义，直到isObject返回false
+      Object.defineProperty(obj, key, {
+        get() {
+          return value
+        },
+        set(newValue) { // 修改时，触发 update 方法
+          observer(newValue)
+          value = newValue // 修改数据
+          updateView() // 更新视图
+        }
+      })
+    }
+
+    let btns = document.querySelectorAll('button')
+    let obj = {
+      a: 1
+    }
+    observer(obj)
+    btns[0].onclick = function () {
+      obj.a = 2
+    }
+  </script>
+</body>
+
+</html>

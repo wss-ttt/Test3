@@ -3,27 +3,78 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>canvas</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 
 <body>
-  <canvas id="bargraphCanvas" width="500" height="600"></canvas>
-  <script src="jquery.js"></script>
+  <canvas id="canvas" width="400" height="400"></canvas>
   <script type="text/javascript">
-    var canvas, context;
-    var img, //图片对象
-      imgIsLoaded, //图片是否加载完成;
-      imgX = 0,
-      imgY = 0,
-      imgScale = 1;
+    let canvas = document.querySelector('#canvas')
+    let context = canvas.getContext('2d')
+    let img = new Image()
+    let stemp = 10 // 步进
+    // 计算尺寸的函数
+    let roll = function (e) {
+      e = e || window.event;
+      if (e.wheelDelta) { //判断浏览器IE，谷歌滑轮事件
+        if (e.wheelDelta > 0) { //当滑轮向上滚动时
+          stemp--
+          return e.wheelDelta / 120 + stemp
+        }
+        if (e.wheelDelta < 0) { //当滑轮向下滚动时
+          stemp++
+          return e.wheelDelta / 120 + stemp
+        }
+      } else if (e.detail) { //Firefox滑轮事件
+        if (e.detail > 0) { //当滑轮向上滚动时
+          stemp--
+          return e.wheelDelta / 120 + stemp
+        }
+        if (e.detail < 0) { //当滑轮向下滚动时
+          stemp++
+          return e.wheelDelta / 120 + stemp
+        }
+      }
+    };
+    //给页面绑定滑轮滚动事件
+    if (document.addEventListener) {
+      document.addEventListener('DOMMouseScroll', roll, false)
+    }
+    canvas.onmousewheel = canvas.onmousewheel = roll // 给canvas绑定滑轮滚动事件
 
-    (function int() {
-      canvas = document.getElementById('bargraphCanvas'); //画布对象
-      context = canvas.getContext('2d'); //画布显示二维图片
-      loadImg();
-    })();
+    //滚动滑轮触发scrollFunc方法
+    window.onload = function () {
+      canvas.width = 1024
+      canvas.height = 576
+      img.src = 'images/500x300.jpg'
+      img.onload = function () {
+        drawImageScale()
+        canvas.onmousewheel = canvas.onmousewheel = function () {
+          let resize = roll()
+          drawImageScale(resize)
+        }
+      }
+    }
+    // 控制写入图片大小的函数
+    function drawImageScale(resize) {
+      if (!resize) {
+        resize = 10
+      }
+      let imgWidth = 1024 + resize
+      let imgHeight = 576 + resize
+      // let sx = imgWidth / 2 - canvas.width / 2
+      // let sy = imgHeight / 2 - canvas.height / 2
+      let dx = canvas.width / 2 - imgWidth / 2
+      let dy = canvas.height / 2 - imgHeight / 2
+      context.drawImage(img, dx, dy, imgWidth, imgHeight, 0, 0, canvas.width, canvas.height)
+    }
   </script>
+
 </body>
 
 </html>

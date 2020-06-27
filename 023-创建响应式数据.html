@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function isObject(obj) {
+      return obj.constructor === Object
+    }
+
+    function update() { // 更新响应
+      console.log('update')
+    }
+
+    function observer(obj) { // 监测对象
+      if (!isObject(obj)) return
+      for (let key in obj) { // 对每个属性进行 Object.defineProperty 定义
+        defineReactive(obj, key, obj[key])
+      }
+    }
+
+    function defineReactive(obj, key, value) { // 数据劫持
+      Object.defineProperty(obj, key, {
+        get() {
+          return value
+        },
+        set(newValue) { // 修改时，触发 update 方法
+          update()
+          value = newValue
+        }
+      })
+    }
+
+    let obj = {
+      a: 1
+    }
+    observer(obj)
+    obj.a = 3 // updated! 
+  </script>
+</body>
+
+</html>

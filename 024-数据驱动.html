@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+</head>
+
+<body>
+    <div id="app">
+        视图-1：<span class="box-1"></span>
+        视图-2：<span class="box-2"></span>
+        <button type="button">改变数据</button>
+    </div>
+    <script src="js/index.js"></script>
+    <script>
+        // 数据
+        var dataObj = {
+            name: 'qqq',
+            age: 18
+        };
+        // 数据劫持
+        dataHijack({
+            data: dataObj,
+            tag: 'view-1',
+            datakey: 'name',
+            selector: '.box-1'
+        });
+        dataHijack({
+            data: dataObj,
+            tag: 'view-2',
+            datakey: 'age',
+            selector: '.box-2'
+        });
+        var btns = document.querySelectorAll('button')
+        btns[0].onclick= function(){
+          // 初始化赋值
+          dataObj.name = 'aaa';
+          dataObj.age = 28;
+        }
+    </script>
+</body>
+
+</html>
