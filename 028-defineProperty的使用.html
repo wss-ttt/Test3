@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /* let p = {
+    }
+    let initValue = 'bbb'
+    Object.defineProperty(p, 'name', {
+      get() {
+        console.log('这个执行了 没')
+        return initValue; 
+      },
+      set(newVal) {
+        initValue = newVal 
+      }
+    })
+    console.log(p.name); */
+
+
+    let a = {};
+    let initName = '乔峰'
+    let initAge = 18
+    Object.defineProperties(a, {
+      name: {
+        get: function () {
+          console.log('name的get');
+          return initName;
+        },
+        set: function (value) {
+          console.log('name的set');
+          initName = value;
+        }
+      },
+      age: {
+        get: function () {
+          console.log('age的get');
+          return initAge;
+        },
+        set: function (value) {
+          console.log('age的set');
+          initAge = value;
+        }
+      }
+    });
+    // 1.name属性的取值
+    console.log(a.name);
+    // 2.name属性的设置值
+    a.name = '杨过';
+    // 3.再次获取name属性的值
+    console.log(a.name)
+
+    // 1.age属性的取值
+    console.log(a.age)
+    // 2.age属性的设置值
+    a.age = 28;
+    // 3.再次获取age属性的值
+    console.log(a.age)
+  </script>
+</body>
+
+</html>
