@@ -30,6 +30,7 @@
           return value
         },
         set(newValue) { // 修改时，触发 update 方法
+          if (newValue === value) return
           update()
           value = newValue
         }
