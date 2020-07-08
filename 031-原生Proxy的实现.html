@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**代理实现类**/
+    function ProxyCopy(target, handle) {
+      //深度克隆当前对象
+      let targetCopy = deepClone(target);
+      //遍历当前对象所有属性
+      Object.keys(targetCopy).forEach(function (key) {
+        Object.defineProperty(targetCopy, key, {
+          get: function () {
+            return handle.get && handle.get(target, key);
+          },
+          set: function (newVal) {
+            handle.set && handle.set(target, key, newVal);
+          }
+        });
+      });
+      // 返回对象
+      return targetCopy;
+    }
+
+    function deepClone(source) {
+
+      if (!source && typeof source !== 'object') {
+        throw new Error('error arguments', 'deepClone')
+      }
+
+      // 判断是数组还是对象
+      const target = source.constructor === Array ? [] : {}
+
+      // 遍历keys
+      Object.keys(source).forEach(keys => {
+        if (source[keys] && typeof source[keys] === 'object') {
+          // 递归调用
+          target[keys] = deepClone(source[keys])
+        } else {
+          target[keys] = source[keys]
+        }
+      })
+      return target
+    }
+
+    let person = {
+      name: ''
+    };
+    let personCopy = new ProxyCopy(person, {
+      get(target, key) {
+        console.log('get');
+        return target[key];
+      },
+      set(target, key, value) {
+        console.log('set');
+        target[key] = value + ",哈哈";
+      }
+    });
+    console.log(personCopy);
+    personCopy.name = '乔峰'; // set方法被拦截。。。
+    console.log(personCopy.name); // get方法被拦截。。。
+  </script>
+</body>
+
+</html>

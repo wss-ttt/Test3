@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const person = {
+      id: 1,
+      name: '乔峰',
+      age: 18
+    }
+    const px = new Proxy(person, {
+      get(target, key) {
+        if(key === 'id') {
+          throw new Error('不能访问id属性')
+        }else {
+          return target[key];
+        }
+      },
+      set(target, key, value) {
+        if(key === 'age' && typeof key !== 'number') {
+          throw new Error('age 必须为数字')
+        } else {
+          target[key] = value
+        }
+      }
+    })
+
+    px.id // Error: 不能访问id属性
+    px.age = 'aaa'; // Error: age必须为数字
+  </script>
+</body>
+
+</html>
