@@ -5,25 +5,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .container {
+      width: 400px;
+      height: 400px;
+      background: #ccc;
+      overflow: hidden;
+    }
+
+    .inner {
+      width: 200%;
+      height: 100%;
+      display: flex;
+      transition: all 1s;
+    }
+
+    .item {
+      flex: 1;
+    }
+
+    .item:first-child {
+      background: red;
+    }
+
+    .item:last-child {
+      background: green;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="box">好好学习 天天向上</div>
+  <div class="container">
+    <div class="inner">
+      <div class="item">1</div>
+      <div class="item">2</div>
+    </div>
+  </div>
+  <button type="button">切换</button>
   <script>
-    let o = {
-      name: 'bbb'
-    }
-    let initValue = 'aaa'
-    Object.defineProperty(o, 'name', {
-      get() {
-        return initValue
+    const scores = [{
+        subject: 'math',
+        score: 88
       },
-      set(newVal) {
-        initValue = newVal
+      {
+        subject: 'chinese',
+        score: 95
+      },
+      {
+        subject: 'english',
+        score: 80
       }
-    })
-    console.log(o)
-
+    ];
+    const dis = {
+      math: 0.5,
+      chinese: 0.3,
+      english: 0.2
+    }
+    const sum = scores.reduce((pre, item) => {
+      return pre + item.score * dis[item.subject]
+    }, 0)
+    console.log(sum) // 88.5
   </script>
 </body>
 
