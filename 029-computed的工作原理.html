@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var Dep = {
+      target: null
+    };
+
+    function defineReactive(obj, key, val) {
+      // 所有的计算属性都依赖这个数组
+      var deps = [];
+      Object.defineProperty(obj, key, {
+        get: function () {
+          // 检查是否调用了计算属性，如果调用了，Department.target将等于一个onDependencyUpdated函数
+          if (Dep.target) {
+            // 把onDependencyUpdated函数push到deos中
+            deps.push(Dep.target);
+          }
+          return val;
+        },
+        set: function (newValue) {
+          val = newValue;
+          // 通知所有的计算属性，告诉它们有个响应属性更新了
+          deps.forEach((changeFunction) => {
+            changeFunction();
+          });
+        } //欢迎加入全栈开发交流圈一起学习交流：864305860
+      })
+    };
+    // 创建一个对象
+    var person = {};
+    // 添加可响应的属性"age"和"country"
+    defineReactive(person, 'age', 25);
+    defineReactive(person, 'country', 'Brazil');
+
+    function defineComputed(obj, key, computeFunc, updateCallback) {
+      var onDependencyUpdated = function () {
+        // 再次计算 计算属性的值
+        var value = computeFunc();
+        updateCallback(value);
+      }
+      Object.defineProperty(obj, key, {
+        get: function () {
+          // 将onDependencyUpdated 这个函数传给Dep.target
+          Dep.target = onDependencyUpdated;
+          var value = computeFunc();
+          Dep.target = null;
+        },
+        set: function () {
+          // 什么也不做，不需要设定计算属性的值
+        }
+      })
+    }
+
+    person.age = 22;
+    defineComputed(
+      person, // 计算属性就声明在这个对象上
+      'status', // 计算属性的名称
+      function () { // 实际返回计算属性值的函数
+        console.log("status getter called")
+        if (person.age < 18) {
+          return 'minor';
+        } else {
+          return 'adult';
+        }
+      },
+      // 当计算属性值更新时调用的函数
+      function (newValue) {
+        console.log("status has changed to", newValue)
+      }
+    );
+    console.log("Status is ", person.status);
+  </script>
+</body>
+
+</html>
