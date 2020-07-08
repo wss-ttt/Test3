@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let o = {
+      name: 'aa'
+    }
+    // 继承 此时p对象会继承o对象上的name属性
+    let p = Object.create(o);
+    p.age = 18;
+    // 通过hasOwnProperty来检测一个对象是否含有特定的自身属性；
+    // 和 in 运算符不同，该方法会忽略掉那些从原型链上继承到的属性
+    console.log('name' in p); // true
+    console.log(p.hasOwnProperty('name')); // false
+  </script>
+</body>
+
+</html>

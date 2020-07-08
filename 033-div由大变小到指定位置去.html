@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 400px;
+      height: 400px;
+      background: #ccc;
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      transform: translate(50%, -50%);
+      transition: all 1s;
+      box-shadow: 0 0 4px 2px rgba(0, 0, 0, .3);
+    }
+    .small {
+      width: 100px;
+      height: 100px;
+      right: 0;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <button type="button">确定</button>
+  <div class="box"></div>
+  <script>
+    let btns = document.querySelectorAll('button');
+    let box = document.querySelector('.box');
+    btns[0].onclick = function() {
+      box.classList.add('small') 
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let name = '乔峰'
+    function defineReactive(obj, key, val) {
+      //obj.a读写,deps和val闭包储存。
+      //defineProperty只能定义一次。
+      Object.defineProperty(obj, key, {
+        //观察者模式
+        get: function () {
+          console.log('get')
+          return val;
+        },
+        set: function(newVal) {
+          console.log('set')
+          val = newVal
+        }
+      });
+    }
+    let o = {};
+    // 创建一个响应式数据(属性)
+    defineReactive(o, 'name', name);
+    // 1.获取值
+    console.log(o.name)
+    // 2.设置值
+    o.name = '杨过'
+    // 3.再次获取值
+    console.log(o.name)
+  </script>
+</body>
+
+</html>

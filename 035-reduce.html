@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    Array.prototype.myReduce = function (fn, initialValue) {
+      let acc = initialValue || this[0]
+      const startIndex = initialValue ? 0 : 1
+      for (let i = startIndex; i < this.length; i++) {
+        acc = fn(acc, this[i], i, this)
+      }
+      return acc
+    }
+    // reduce的使用场景
+
+    // 1.累加
+    let arr = [2, 3, 4];
+    let res = arr.myReduce((sum, item) => sum + item)
+    console.log(res)
+    // 2.计数器
+    let arr2 = ['aa', 'bb', 'cc', 'aa'];
+    let res2 = arr2.myReduce((pre, cur) => {
+      if (cur in pre) {
+        pre[cur]++;
+      } else {
+        pre[cur] = 1;
+      }
+      return pre;
+    }, {}) // 这个地方的初始值传递进去的是一个空对象{}
+    console.log('res2', res2); // 输出的结果： {aa: 2, bb: 1, cc: 1}
+
+    // 3.数组扁平化
+    // const deepFlatten = arr => arr.myReduce((a, v) => a.concat(Array.isArray(v) ? deepFlatten(v) : v), []);
+
+    const deepFlatten = arr => {
+      return arr.myReduce((pre, cur) => {
+        if (Array.isArray(cur)) {
+          // 判断是否是数组,如果是数组，需要递归调用
+          return pre.concat(deepFlatten(cur));
+        } else {
+          return pre.concat(cur);
+        }
+      }, [])
+    };
+    console.log(deepFlatten([1, [2, 3, [4, 5]]]));
+
+    // 4.生成斐波那契数列
+    const fibonacci = n => Array(n).fill(0).reduce((acc, val, i) => acc.concat(i > 1 ? acc[i - 1] + acc[i - 2] : i),
+      []);
+    console.log('斐波那契数列：', fibonacci(5));
+    // 5.对象空值判断
+    let school = {
+      name: 'Hope middle school',
+      created: '2001',
+      classes: [{
+          name: '三年二班',
+          teachers: [{
+              name: '张二蛋',
+              age: 26,
+              sex: '男',
+              actor: '班主任'
+            },
+            {
+              name: '王小妞',
+              age: 23,
+              sex: '女',
+              actor: '英语老师'
+            }
+          ]
+        },
+        {
+          name: '明星班',
+          teachers: [{
+              name: '欧阳娜娜',
+              age: 29,
+              sex: '女',
+              actor: '班主任'
+            },
+            {
+              name: '李易峰',
+              age: 28,
+              sex: '男',
+              actor: '体育老师'
+            },
+            {
+              name: '杨幂',
+              age: 111,
+              sex: '女',
+              actor: '艺术老师'
+            }
+          ]
+        }
+      ]
+    };
+    // 常规做法
+    console.log(school.classes &&
+      school.classes[0] &&
+      school.classes[0].teachers &&
+      school.classes[0].teachers[0] &&
+      school.classes[0].teachers[0].name);
+    const get = (p, o) => p.myReduce((pre, cur) => (pre && pre[cur] ? pre[cur] : null), o);
+
+    // 取的数据是: school['classess'][2]['teachers'][1]['name']
+    console.log(get(['classes', 2, 'teachers', 1, 'name'], school)); // null
+    let data = [{
+      info: {
+        name: 'aa',
+        age: 18
+      },
+      status: 0
+    }, {
+      info: {
+        name: 'bb',
+        age: 28
+      },
+      status: 1
+    }]
+    console.log(get([0, 'info', 'name'], data)); // aa
+    // 6.过滤属性
+    // 定义一个pick方法
+    const pick = (obj, arr) =>
+      // 使用myReduce方法
+      arr.myReduce(function (acc, curr) {
+        if (curr in obj) {
+          acc[curr] = obj[curr]
+          return acc;
+        }
+      }, {});
+    let res3 = pick({
+      a: 1,
+      b: 2,
+      c: 3
+    }, ['a', 'c']);
+    console.log('res3', res3);
+    // 7.分组
+    const groupBy = (arr, func) =>
+      arr.map(typeof func === 'function' ? func : val => val[func])
+      .myReduce((acc, val, i) => {
+        acc[val] = (acc[val] || []).concat(arr[i]);
+        return acc;
+      }, {});
+    console.log(groupBy([6.1, 4.2, 6.3], Math.floor));
+    console.log(groupBy(['one', 'two', 'three'], 'length'));
+    // 8.数组删除指定位置的值
+    const remove = (arr, fn) => {
+      return arr.filter(fn).myReduce((acc, cur) => {
+        arr.splice(arr.indexOf(cur), 1);
+        return acc.concat(cur);
+      }, []);
+    }
+    const arr4 = [1, 7, 3, 4, 8];
+    console.log(remove(arr4, n => n % 3 == 1));
+    // 测试
+    console.log([1, 7, 3, 4, 8].filter( n => n % 3 === 1)); // [1, 7, 4]
+    console.log(arr4); // [3, 8]
+  </script>
+</body>
+
+</html>
