@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 400px;
+      height: 400px;
+      background: #ccc;
+      display: flex;
+      cursor: pointer;
+    }
+
+    .container div {
+      flex: 1;
+      border: 1px solid #fff;
+      background-color: #fb3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+  <script>
+    var container = document.querySelector('.container');
+    var divs = container.querySelectorAll('div');
+    var timer = null;
+    var index = 0;
+    timer = setInterval(autoPlay, 1000);
+
+    function autoPlay() {
+      // 1.排他思想
+      for (var i = 0; i < divs.length; i++) {
+        divs[i].style.backgroundColor = '#fb3';
+      }
+      // 2.高亮当前的
+      divs[index].style.backgroundColor = '#1acd7e';
+      // 3.自增
+      index++;
+      // 4.边界判断
+      if (index === divs.length) {
+        index = 0;
+      }
+    }
+    // 移入-关闭轮播
+    container.onmouseover = function () {
+      clearInterval(timer);
+    }
+    // 移除-开启轮播
+    container.onmouseout = function () {
+      timer = setInterval(autoPlay, 1000);
+    }
+  </script>
+</body>
+
+</html>
