@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 100px;
+      height: 150px;
+      background: #000;
+      margin: auto;
+      /* overflow: hidden; */
+    }
+
+    .container .inner {
+      width: 500%;
+      height: 100px;
+      background: #ccc;
+      display: flex;
+      transition: all 1s;
+    }
+
+    .container .inner div {
+      width: 100px;
+      height: 100%;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="inner">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+    </div>
+  </div>
+  <script>
+    var colors = ['#fb3', '#1acd7e', 'tan', '#58a', '#fac']
+    var container = document.querySelector('.container');
+    // 我们需要的移动的的元素是inner
+    var inner = container.children[0];
+    var divs = inner.querySelectorAll('div');
+    var unitWidth = divs[0].offsetWidth;
+    var index = 0;
+    var timer = null;
+    // 设置背景色
+    for (var i = 0; i < divs.length; i++) {
+      divs[i].style.backgroundColor = colors[i];
+    }
+    timer = setInterval(autoPlay, 1000);
+
+    function autoPlay() {
+      inner.style.transform = `translate(${-index * unitWidth}px`;
+      index++;
+      if (index === divs.length) {
+        index = 0;
+      }
+    }
+    // 移入-关闭轮播
+    inner.onmouseover = function () {
+      clearInterval(timer);
+    }
+    // 移除-开启轮播
+    inner.onmouseout = function () {
+      timer = setInterval(autoPlay, 1000);
+    }
+  </script>
+</body>
+
+</html>
