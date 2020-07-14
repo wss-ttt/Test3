@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text">
+  <script>
+
+    function isNumber(num) {
+      // isNaN()函数 把空串 空格 以及null 按照0来处理 所以先去除，    
+      if (num === '' || num == null) {
+        return false;
+      }
+      if ((typeof num === 'number' || typeof num === 'string') && !isNaN(num)) {
+        // 对于空数组和只有一个数值成员的数组或全是数字组成的字符串，isNaN返回false，
+        // 例如：'123'、['']、[]、[2]、['123'],isNaN都返回false,   
+        // 所以如果不需要num包含这些特殊情况，则这个判断改写为if(typeof num === 'number' && !isNaN(num))
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
+    console.log(isNaN(null)); // false
+    console.log(isNaN('')); // false一个空格
+    console.log(isNaN('   ')); // false 多个空格
+    console.log(isNaN([])); // false 空数组
+    console.log(isNaN([''])); // false
+    console.log(isNaN([1])); // false
+    console.log(isNaN(['1'])); // false
+
+    console.log(isNaN(['1', 'aa'])); // true
+    console.log(isNaN(undefined)); // true
+
+
+    function _isNumber(num) {
+      if(parseFloat(num).toString === 'NaN') {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    console.log(null % 1) // 0
+    console.log([] % 1) // 0
+    console.log([''] % 1) // 0
+    console.log(['1'] % 1) // 0
+    console.log('1' % 1) // 0
+
+    console.log(['1', '2'] % 1) // NaN
+    console.log(['aa'] % 1) // NaN
+    
+  </script>
+</body>
+
+</html>
