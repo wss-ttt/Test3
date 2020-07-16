@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button type="button">确定1</button>
+  <button type="button">确定2</button>
+  <input type="file">
+  <script>
+    let btns = document.querySelectorAll('button')
+    let input = document.querySelector('input')
+    btns[0].onclick = function() {
+      // btns[1].click();
+
+      // btns[1].dispatchEvent(new MouseEvent('click'))
+      // input.dispatchEvent(new MouseEvent('click'))
+      input.click()
+    }
+    btns[1].click = function() {
+      console.log('我是按钮2')
+    }
+    input.onchange = function(e) {
+      // 兼容性获取
+      let event = e || window.event;
+      // 兼容性获取
+      let target = event.target || event.srcElement;
+      let files = target.files[0]
+      console.log('files', files)
+    }
+  </script>
+</body>
+</html>
