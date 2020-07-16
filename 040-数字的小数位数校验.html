@@ -1,18 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <input type="text">
-  <script>
-    let input = document.querySelector('input')
-    input.onblur = function() {}
-    function valideNum() {
-      
-    }
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" />
+    <script>
+      let input = document.querySelector('input')
+      input.onblur = function () {
+        let res = valideNum(this.value)
+        if (!res.state) {
+          alert(res.msg)
+          return
+        }
+        // 执行其他操作
+        console.log('执行其他操作')
+      }
+      function valideNum(num) {
+        debugger
+        num = num.replace(/^\s+|\s+$/g, '') // 去掉前后空格
+        const res1 = parseInt(num)
+        const res2 = parseFloat(num)
+        let data = {
+          state: 1,
+          msg: 'ok',
+        }
+        if (!num) {
+          data.state = 0
+          data.msg = '不能为空'
+          return data
+        } else if (!isNumber(num)) {
+          data.state = 0
+          data.msg = '请输入数字类型的数据'
+          return data
+        } else if (res1 !== res2) {
+          // 说明是个小数
+          // 现在需要判断小数点后面的位数
+          // 以.进行分割
+          const arr = ('' + num).split('.')
+          const res3 = arr[0]
+          const res4 = arr[1]
+          if (res4.length > 3) {
+            data.state = 0
+            data.msg = '输入的数值只能到小数点的后3位'
+            return data
+          }
+        }
+        return data
+      }
+
+      // 判断输入是否是一个数值类型的数据
+      /**
+       * 1: 是一个数值
+       * '1': 也是一个数值
+       * '1aaa': 就不是一个数值
+       * **/
+      function isNumber(num) {
+        // isNaN()函数会把空串(eg '' 和 '   ')以及null,会按照0来处理,所以先去除，
+        if (num === '' || num == null) {
+          return false
+        }
+        return !isNaN(num)
+      }
+    </script>
+  </body>
 </html>
