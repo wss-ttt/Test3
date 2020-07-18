@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    .home-map {
+    .box {
       float: left;
       width: 100%;
       height: 560px;
@@ -14,7 +14,7 @@
       /* background: #284BFC; */
     }
 
-    .home-map .home-map-bg {
+    .box .bg {
       position: relative;
       width: 1920px;
       height: 473px;
@@ -23,7 +23,7 @@
       margin: 60px auto 0;
     }
 
-    .home-map .home-map-bg .point {
+    .box .bg .point {
       position: absolute;
       top: 0;
       left: 0;
@@ -41,25 +41,20 @@
       background: transparent;
     }
 
-    .home-map .home-map-bg .point-area .point-10,
-    .home-map .home-map-bg .point-area .point-40,
-    .home-map .home-map-bg .point-area .point-80 {
+    .box .bg .point-area .point-10,
+    .box .bg .point-area .point-40,
+    .box .bg .point-area .point-80 {
       width: 100%;
       height: 100%;
     }
 
-    .home-map .home-map-bg .point-dot {
+    .box .bg .point-dot {
       z-index: 1;
       background-color: #ffff01;
       border: 1px solid rgba(107, 118, 60, 0.7);
     }
 
-    .home-map .home-map-bg .zABThree .point-dot,
-    .home-map .home-map-bg .zABFive .point-dot {
-      background-color: #ffff01;
-    }
-
-    .home-map .home-map-bg .point-10:after {
+    .box .bg .point-10:after {
       content: "";
       display: block;
       position: absolute;
@@ -74,12 +69,12 @@
       animation: ripple 4.5s ease-out 225ms infinite;
     }
 
-    .home-map .home-map-bg .zABThree .point-10:after,
-    .home-map .home-map-bg .zABFive .point-10:after {
+    .box .bg .zABThree .point-10:after,
+    .box .bg .zABFive .point-10:after {
       border: 2px solid #60714B;
     }
 
-    .home-map .home-map-bg .point-40:after {
+    .box .bg .point-40:after {
       content: "";
       display: block;
       position: absolute;
@@ -94,7 +89,7 @@
       animation: ripple 4.5s ease-out 0.9s infinite;
     }
 
-    .home-map .home-map-bg .point-70:after {
+    .box .bg .point-70:after {
       content: "";
       display: block;
       position: absolute;
@@ -109,7 +104,7 @@
       animation: ripple 4.5s ease-out 1575ms infinite;
     }
 
-    .home-map .home-map-bg .point-80:after {
+    .box .bg .point-80:after {
       content: "";
       display: block;
       position: absolute;
@@ -124,16 +119,7 @@
       animation: ripple 4.5s ease-out 1.8s infinite;
     }
 
-    .home-map .home-map-bg .zABThree .point-40:after,
-    .home-map .home-map-bg .zABThree .point-70:after,
-    .home-map .home-map-bg .zABThree .point-80:after,
-    .home-map .home-map-bg .zABFive .point-40:after,
-    .home-map .home-map-bg .zABFive .point-70:after,
-    .home-map .home-map-bg .zABFive .point-80:after {
-      border: 2px solid rgba(107, 118, 60, 0.5);
-    }
-
-    .home-map .home-map-bg .point-area {
+    .box .bg .point-area {
       text-align: center;
       top: 140px;
       left: 220px;
@@ -145,40 +131,40 @@
       transition: opacity 0.5s ease-out;
     }
 
-    .home-map .home-map-bg .red .point-dot {
+    .box .bg .red .point-dot {
       background-color: #FE3C86;
       border: 1px solid rgba(253, 84, 57, 0.7);
     }
 
-    .home-map .home-map-bg .red .point-80:after,
-    .home-map .home-map-bg .red .point-40:after,
-    .home-map .home-map-bg .red .point-10:after {
+    .box .bg .red .point-80:after,
+    .box .bg .red .point-40:after,
+    .box .bg .red .point-10:after {
       border: 2px solid rgba(253, 84, 57, 0.9);
     }
 
-    .home-map .home-map-bg .green .point-dot {
+    .box .bg .green .point-dot {
       background-color: #42FFC0;
       border: 1px solid rgba(66, 255, 192, 0.7);
     }
 
-    .home-map .home-map-bg .green .point-80:after,
-    .home-map .home-map-bg .green .point-40:after,
-    .home-map .home-map-bg .green .point-10:after {
+    .box .bg .green .point-80:after,
+    .box .bg .green .point-40:after,
+    .box .bg .green .point-10:after {
       border: 2px solid rgba(66, 255, 192, 0.9);
     }
 
-    .home-map .home-map-bg .yellow .point-dot {
+    .box .bg .yellow .point-dot {
       background-color: #FFD518;
       border: 1px solid rgba(255, 213, 24, 0.7);
     }
 
-    .home-map .home-map-bg .yellow .point-80:after,
-    .home-map .home-map-bg .yellow .point-40:after,
-    .home-map .home-map-bg .yellow .point-10:after {
+    .box .bg .yellow .point-80:after,
+    .box .bg .yellow .point-40:after,
+    .box .bg .yellow .point-10:after {
       border: 2px solid rgba(255, 213, 24, 0.9);
     }
 
-    .home-map .home-map-bg .zABOne {
+    .box .bg .one {
       width: 238px;
       height: 238px;
       top: -14px;
@@ -224,10 +210,9 @@
 </head>
 
 <body>
-  <div class="home-map">
-    <div class="home-map-bg">
-
-      <div class="point-area zABOne red">
+  <div class="box">
+    <div class="bg">
+      <div class="point-area one red">
         <a href="javascript:;" target="_blank" class="point point-dot"></a>
         <div class="point point-shadow point-10"></div>
         <div class="point point-shadow point-40"></div>
