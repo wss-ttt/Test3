@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .swiper-container {
+        width: 100px;
+        height: 150px;
+        background: #ccc;
+        margin: 100px auto;
+        /* overflow: hidden; */
+      }
+      /* 滑动的是该元素 */
+      .swiper-wrapper {
+        width: 100%;
+        /* height: 100%; */
+        height: 100px;
+        display: flex;
+        transition: all 2s;
+        background: red;
+      }
+      .swiper-slide {
+        /* width: 100%; */
+        width: 100px;
+        height: 100%;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">Slide 1</div>
+        <div class="swiper-slide">Slide 2</div>
+        <div class="swiper-slide">Slide 3</div>
+        <div class="swiper-slide">Slide 4</div>
+        <div class="swiper-slide">Slide 5</div>
+      </div>
+    </div>
+    <script>
+      let colors = ['red', 'green', 'blue', '#fb3', '#58a']
+      let container = document.querySelector('.swiper-container')
+      let wrapper = container.querySelector('.swiper-wrapper')
+      let slides = wrapper.children
+      let unitWidth = slides[0].offsetWidth
+      let index = 0
+      let tiemr = null
+      // 动态设置背景色
+      /* for (let i = 0, len = slides.length; i < len; i++) {
+        slides[i].style.background = colors[i]
+      } */
+
+      // 自动滑动
+      function autoPlay() {
+        wrapper.style.transform = `translate(${-index * unitWidth}px`
+        index++
+        if (index === slides.length) {
+          index = 0
+        }
+      }
+      timer = setInterval(autoPlay, 2000)
+    </script>
+  </body>
+</html>
