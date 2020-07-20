@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 400px;
+        height: 400px;
+        background: #ccc;
+        overflow: hidden;
+      }
+
+      .inner {
+        width: 200%;
+        height: 100%;
+        display: flex;
+        transition: all 1s;
+      }
+
+      .item {
+        flex: 1;
+      }
+
+      .item:first-child {
+        background: red;
+      }
+
+      .item:last-child {
+        background: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="inner">
+        <div class="item">1</div>
+        <div class="item">2</div>
+      </div>
+    </div>
+    <button type="button">切换</button>
+    <script>
+      function inheritPrototype(Swiper, SwiperClass) {
+        // 复制一份父类的原型副本保存在变量中
+        // Swiper.prototype = inheritObject(SwiperClass.prototype)
+        Swiper.prototype = Object.create(SwiperClass.prototype)
+        // 修正因为重写子类原型导致子类的constructor属性被修改
+        Swiper.prototype.constructor = Swiper
+      }
+      function inheritObject(o) {
+        // 声明一个过渡类
+        function F() {}
+        // 过渡类的原型对象为 o ,也就是传递进来的参数
+        F.prototype = o
+        // 返回过渡类的实例对象
+        return new F()
+      }
+
+      // 定义父类
+      function SwiperClass(name) {
+        this.name = name
+        this.colors = ['red', 'green', 'blue']
+      }
+      // 定义父类原型方法
+      SwiperClass.prototype.getName = function () {
+        console.log(this.name)
+      }
+
+      // 定义子类
+      function Swiper(name, time) {
+        SwiperClass.call(this, name)
+        // 子类新增属性
+        this.time = time
+      }
+
+      inheritPrototype(Swiper, SwiperClass)
+
+      Swiper.prototype.getTime = function () {
+        console.log(this.time)
+      }
+
+      var swiper = new Swiper('js', 2018)
+      console.log(swiper)
+    </script>
+  </body>
+</html>

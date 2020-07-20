@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 400px;
+        height: 400px;
+        background: #ccc;
+        overflow: hidden;
+      }
+
+      .inner {
+        width: 200%;
+        height: 100%;
+        display: flex;
+        transition: all 1s;
+      }
+
+      .item {
+        flex: 1;
+      }
+
+      .item:first-child {
+        background: red;
+      }
+
+      .item:last-child {
+        background: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="inner">
+        <div class="item">1</div>
+        <div class="item">2</div>
+      </div>
+    </div>
+    <button type="button">切换</button>
+    <script>
+      function A() {
+        this.name = 'aa'
+      }
+      A.prototype.sayA = function () {
+        console.log('sayA')
+      }
+      function B() {
+        A.call(this)
+      }
+
+      B.prototype = Object.create(A.prototype) // 1
+      B.constructor = B // 2
+
+      // 该代码要写在 1和2的下面，否在会覆盖掉
+      B.prototype.sayB = function () {
+        console.log('sayB')
+      }
+      var b = new B()
+      console.log(b)
+    </script>
+  </body>
+</html>
