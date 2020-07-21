@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 400px;
+        height: 400px;
+        background: #ccc;
+        overflow: hidden;
+      }
+
+      .inner {
+        width: 200%;
+        height: 100%;
+        display: flex;
+        transition: all 1s;
+      }
+
+      .item {
+        flex: 1;
+      }
+
+      .item:first-child {
+        background: red;
+      }
+
+      .item:last-child {
+        background: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="inner">
+        <div class="item">1</div>
+        <div class="item">2</div>
+      </div>
+    </div>
+    <button type="button">切换</button>
+    <script>
+      function deepClone(source) {
+        if (!source && typeof source !== 'object') {
+          throw new Error('error arguments', 'deepClone')
+        }
+        const targetObj = source.constructor === Array ? [] : {}
+        // ['name', 'age', 'info']
+        Object.keys(source).forEach(keys => {
+          if (source[keys] && typeof source[keys] === 'object') {
+            targetObj[keys] = deepClone(source[keys])
+          } else {
+            targetObj[keys] = source[keys] // targetObj['name'] = source['name']
+          }
+        })
+        return targetObj
+      }
+
+      var o = {
+        name: 'age',
+        age: 18,
+        info: {
+          tel: '110'
+        }
+      }
+
+      console.log(Object.keys(o))
+      console.log(Object.values(o))
+      console.log(Object.entries(o))
+
+      var o2 = {
+        name: 'age',
+        age: 18,
+        info: {
+          tel: '110',
+          address: {
+            ip: '119'
+          }
+        }
+      }
+      var res = JSON.parse(JSON.stringify(o2))
+
+      console.log(res === o2)
+      res.info.address = 220
+      console.log(o2)
+      console.log(res)
+      console.log(res.info.address === o2.info.address)
+
+      function _uniqueArr(arr) {
+        let res = []
+        for (let i = 0, len = arr.length; i < len; i++) {
+          if (res.indexOf(arr[i]) === -1) {
+            res.push(arr[i])
+          }
+        }
+        return res
+      }
+
+      function uniqueArr(arr) {
+        // return Array.from(new Set(arr))
+        return [...new Set(arr)]
+      }
+
+      let a = {}
+      let b = {}
+      console.log(a === b)
+      // let arr = [1, 1, 2, 3, 6, 7, 7]
+      let arr = [1, 1, 2, 3, 6, 7, 7, a, b]
+      // console.log(_uniqueArr(arr))
+      console.log(_uniqueArr(arr))
+    </script>
+  </body>
+</html>
