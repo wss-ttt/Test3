@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+  </head>
+  <body>
+    <script>
+      nextTick(() => {
+        console.log('好好学习')
+      }, 1000)
+
+      function nextTick(callback, delay = 0) {
+        return setTimeout(callback, delay)
+      }
+    </script>
+  </body>
+</html>
