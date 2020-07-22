@@ -17,7 +17,7 @@
     <script>
       // 创建单例模式
       const getSingle = (function () {
-        let single = null
+        let single = null // 私有变量,会一直保持在内存中
         return function (fn) {
           if (!single) {
             return (single = fn())
