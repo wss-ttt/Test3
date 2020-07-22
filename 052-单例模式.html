@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const getSingle = (function () {
+        let instance = null
+        function Person(name, age) {
+          this.name = name
+          this.age = age
+        }
+        return function (name, age) {
+          if (!instance) {
+            instance = new Person(name, age)
+            return instance
+          }
+          return instance
+        }
+      })()
+      let p1 = new getSingle('乔峰', 18)
+      let p2 = new getSingle('杨过', 28)
+      console.log(p1 === p2)
+    </script>
+  </body>
+</html>

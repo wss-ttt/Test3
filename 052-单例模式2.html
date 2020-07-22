@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background: #fb3;
+      }
+    </style>
+  </head>
+  <body>
+    <button type="button">确定</button>
+    <script>
+      const loginLayer = (function () {
+        let div = document.createElement('div')
+        div.className = 'box'
+        div.style.display = 'none'
+        document.body.appendChild(div)
+        return div // 返回创建的元素
+      })()
+      const btns = document.querySelectorAll('button')
+      btns[0].onclick = function (event) {
+        // 获取事件对象
+        event = event || window.event
+        loginLayer.style.display = 'block'
+        // 取消冒泡
+        if (event && event.stopPropagation) {
+          event.stopPropagation()
+        } else {
+          event.cancelBubble = true
+        }
+      }
+      document.onclick = function () {
+        loginLayer.style.display = 'none'
+      }
+    </script>
+  </body>
+</html>

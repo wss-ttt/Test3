@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background: #fb3;
+      }
+    </style>
+  </head>
+  <body>
+    <button type="button">确定</button>
+    <script>
+      // 创建单例模式
+      const getSingle = (function () {
+        let single = null
+        return function (fn) {
+          if (!single) {
+            return (single = fn())
+          }
+          return single
+        }
+      })()
+      const loginLayer = function () {
+        let div = document.createElement('div')
+        div.className = 'box'
+        div.style.display = 'none'
+        document.body.appendChild(div)
+        return div // 注意：这里需要有返回值
+      }
+
+      let div = null
+      const btns = document.querySelectorAll('button')
+      btns[0].onclick = function (event) {
+        event = event || window.event
+        div = getSingle(loginLayer)
+        div.style.display = 'block'
+        if (event && event.stopPropagation) {
+          event.stopPropagation()
+        } else {
+          event.cancelBubble = true
+        }
+      }
+      document.onclick = function () {
+        div.style.display = 'none'
+      }
+    </script>
+  </body>
+</html>
