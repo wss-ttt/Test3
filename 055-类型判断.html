@@ -43,9 +43,30 @@
       console.log(_isString(str)) // true
 
       // 不能获取到自定义的类型
-      function Person () {}
+      function Person() {}
       let p = new Person()
       console.log(Object.prototype.toString.call(p)) // [object Object]
+
+      // 缓存函数包装器
+      // 这个地方也是相当于把fn提前植入进去
+      // 因为fn在闭包的环境中，所以会一直保留在内存中
+      function cached(fn) {
+        let cache = {}
+        return function (obj) {
+          if (cache[obj]) {
+            return cache[obj]
+          }
+          return (cache[obj] = fn(obj))
+        }
+      }
+      // 求平方
+      function square(num) {
+        return num * num
+      }
+
+      let squareCached = cached(square)
+      console.log(squareCached(2))
+      console.log(squareCached(2))
     </script>
   </body>
 </html>
