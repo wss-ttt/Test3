@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const isArray = function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]'
+      }
+
+      const isObject = function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Object]'
+      }
+
+      const isString = function (obj) {
+        return Object.prototype.toString.call(obj) === '[object String]'
+      }
+
+      let arr = []
+      let o = {}
+      let str = 'aa'
+      console.log(isArray(arr)) // true
+      console.log(isObject(o)) // true
+      console.log(isObject(null)) // false
+      console.log(isString(str)) // true
+      console.log(new String('aa'))
+
+      // 封装isType方法
+      //可以先把type植入进去，可以通过闭包给缓存起来
+      const isType = function (type) {
+        return function (obj) {
+          return Object.prototype.toString.call(obj) === `[object ${type}]`
+        }
+      }
+      const _isArray = isType('Array')
+      const _isObject = isType('Object')
+      const _isString = isType('String')
+      console.log(_isArray(arr)) // true
+      console.log(_isObject(o)) // true
+      console.log(_isString(str)) // true
+
+      // 不能获取到自定义的类型
+      function Person () {}
+      let p = new Person()
+      console.log(Object.prototype.toString.call(p)) // [object Object]
+    </script>
+  </body>
+</html>
