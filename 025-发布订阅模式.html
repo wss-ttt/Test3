@@ -1,51 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
-<body>
-  <script>
-    class Dep {
-      constructor() {
-        this.subs = [];
-      }
-      // 增加订阅者
-      addSub(sub) {
-        if (this.subs.indexOf(sub) < 0) {
-          this.subs.push(sub);
+  <body>
+    <button type="button">确定</button>
+    <script>
+      // 订阅者模式
+      let Observer = {
+        cache: {},
+        // 监听 -接收消息，然后做出相应的行为
+        on: function (type, fn) {
+          if(this.cache[type]) {  // cache['aa'] = [fn，fn2]
+            this.cache[type].push(fn)
+          } else {
+            this.cache[type] = []
+            this.cache[type].push(fn)
+          }
+        },
+        // 触发 - 发布消息
+        emit: function (type, data) {
+          for (let i = 0; i < this.cache[type].length; i++) {
+            this.cache[type][i](data)
+          }
         }
       }
-      // 通知订阅者
-      notify() {
-        this.subs.forEach((sub) => {
-          sub.update();
+
+      let btns = document.querySelectorAll('button')
+      let data = {}
+      // 父组件
+      Observer.on(['aa','bb'], function (data) {
+        console.log('aaa')
+      })
+
+      Observer.on('aa', function (data) {
+        console.log('bbb')
+      })
+      // 子组件
+      btns[0].onclick = function () {
+        Observer.emit('aa', {
+          msg: '好好学习'
         })
       }
-    }
-
-    // 创建一个对象
-    const dep = new Dep();
-
-    const sub = {
-      update() {
-        console.log('sub1 update')
-      }
-    }
-
-    const sub1 = {
-      update() {
-        console.log('sub2 update');
-      }
-    }
-
-    dep.addSub(sub);
-    dep.addSub(sub1);
-    dep.notify(); // 通知订阅者事件发生，触发他们的更新函数
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

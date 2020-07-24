@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <button type="button">确定</button>
+    <script>
+      let Vue = new function() {
+        this.eventCache = Object.create(null)
+      }
+      Vue.prototype.$on = function(type, fn) {
+        (this.eventCache[type] || (this.eventCache[type] = [])).push(fn)
+      }
+      Vue.prototype.$emit = function(type) {
+        for(let i =0;i<this.eventCache[type].length;i++) {
+          this.eventCache[type][i]()
+        }
+      }
+
+      let btns = document.querySelectorAll('button')
+      let vm = new Vue()
+      // 父组件
+      vm.$on('aa', function (data) {
+        console.log('aaa')
+      })
+
+      vm.$on('aa', function (data) {
+        console.log('bbb')
+      })
+      // 子组件
+      btns[0].onclick = function () {
+        vm.$emit('aa', {
+          msg: '好好学习'
+        })
+      }
+    </script>
+  </body>
+</html>
