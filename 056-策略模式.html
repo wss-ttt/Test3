@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 使用分支的做法
+      function getBonus(salary, level) {
+        if (level === 'A') {
+          return salary * 2
+        } else if (level === 'B') {
+          return salary * 3
+        } else if (level === 'C') {
+          return level * 4
+        }
+      }
+      // 面向对象版的策略模式
+      function LevelA() {}
+      LevelA.prototype.calculate = function (salary) {
+        return salary * 2
+      }
+
+      function LevelB() {}
+      // 等级二
+      LevelB.prototype.calculate = function (salary) {
+        return salary * 3
+      }
+      // 等级三
+      function LevelC() {}
+      LevelC.prototype.calculate = function () {
+        return salary * 4
+      }
+
+      function Bonus(salary, strategy) {
+        this.salary = salary
+        this.strategy = strategy
+      }
+      Bonus.prototype.getBonus = function () {
+        return this.strategy.calculate(this.salary)
+      }
+
+      let b = new Bonus(1000, new LevelA())
+      let res = b.getBonus()
+      console.log(res)
+    </script>
+  </body>
+</html>

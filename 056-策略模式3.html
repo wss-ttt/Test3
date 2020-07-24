@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 闭包可以封装数据，私有变量 不被外界访问到
+      let strategies = (function () {
+        let types = {
+          A: function (salary) {
+            return salary * 2
+          },
+          B: function (salary) {
+            return salary * 3
+          },
+          C: function (salary) {
+            return salary * 4
+          }
+        }
+        return function (strategy, salary) {
+          return types[strategy](salary)
+        }
+      })()
+
+      function Bonus(salary, strategy) {
+        this.salary = salary
+        this.strategy = strategy
+      }
+      Bonus.prototype.getBonus = function () {
+        return strategies(this.strategy, this.salary)
+      }
+
+      let b = new Bonus(1000, 'B')
+      console.log(b.getBonus())
+    </script>
+  </body>
+</html>
