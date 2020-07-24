@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .error-msg {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" /><span class="error-msg"></span>
+    <script>
+      let strategies = {
+        notEmpty: function (value, msg) {
+          if (value === '') {
+            return msg
+          }
+        },
+        minLength: function (value, length, msg) {
+          if (value.length < length) {
+            return msg
+          }
+        },
+        isMoblle: function (value, msg) {
+          if (!/^1[3456789]\d{9}$/.test(value)) {
+            return msg
+          }
+        }
+      }
+      // 添加规则
+      function Validate(dom, rules) {
+        this.cache = []
+      }
+      Validate.prototype.add = function (dom, rule, msg) {
+        this.cache.push(function () {
+          let arr = rule.split(':') // ['minLength', 6]
+          let strategy = arr.shift() // 此处 strategy = 'minLength' arr = [6]
+          arr.unshift(dom.value) // arr = [value, 6]
+          arr.push(msg) // arr = [value, 6, msg]
+          return strategies[strategy].apply(dom, arr)
+        })
+      }
+
+      Validate.prototype.start = function () {
+        let msg = ''
+        for (let i = 0; i < this.cache.length; i++) {
+          msg = this.cache[i]()
+          if (msg) break
+        }
+        return msg
+      }
+      let inputs = document.querySelectorAll('input')
+      let errorDOM = document.querySelector('.error-msg')
+      let validate = new Validate()
+      // 添加校验规则
+      validate.add(inputs[0], 'notEmpty', '不能为空')
+      validate.add(inputs[0], 'minLength:6', '最小长度不能小于6位')
+      validate.add(inputs[0], 'isMoblle', '请输入正确的手机格式')
+      inputs[0].onblur = function () {
+        // 0.开始校验
+        let error = validate.start()
+        // 1.先清空操作
+        errorDOM.innerHTML = ''
+        // 2.如果存在错误
+        if (error) {
+          errorDOM.innerHTML = error
+          return
+        }
+        // 3.提交
+        console.log('submit')
+      }
+    </script>
+  </body>
+</html>
