@@ -20,20 +20,19 @@
         document.body.appendChild(imgNode)
         var img = new Image()
         img.onload = function () {
-          // 模拟耗时操作
-          setTimeout(() => {
-            imgNode.src = img.src
-          }, 5000)
+          imgNode.src = img.src
         }
         return {
           setSrc: function (src) {
-            imgNode.src = 'images/2.png' // 占位图片
+            imgNode.src = 'images/holder.png' // 占位图片
             img.src = src
           }
         }
       })()
 
-      MyImage.setSrc('images/1.png')
+      MyImage.setSrc(
+        'https://raw.githubusercontent.com/wss-ttt/Test/master/test6/images/1.jpg'
+      )
     </script>
   </body>
 </html>
