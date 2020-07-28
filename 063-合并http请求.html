@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <input type="checkbox" id="1" />文件1<br />
+    <input type="checkbox" id="2" />文件2<br />
+    <input type="checkbox" id="3" />文件3<br />
+    <input type="checkbox" id="4" />文件4<br />
+    <input type="checkbox" id="5" />文件5<br />
+    <script>
+      var uploadFile = function (id) {
+        // 模拟发送请求的过程
+        console.log('上传文件', id)
+      }
+      var checkboxs = document.querySelectorAll('input')
+      for (var i = 0, c; (c = checkboxs[i++]); ) {
+        c.onclick = function () {
+          if (this.checked) {
+            uploadFile(this.id)
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
