@@ -15,7 +15,7 @@
   <body>
     <img src="" alt="" />
     <script>
-      var MyImage = (function () {
+      /* var MyImage = (function () {
         var imgNode = document.createElement('img')
         document.body.appendChild(imgNode)
         var img = new Image()
@@ -32,7 +32,20 @@
 
       MyImage.setSrc(
         'https://raw.githubusercontent.com/wss-ttt/Test/master/test6/images/1.jpg'
-      )
+      ) */
+
+      function preLoad(src) {
+        var imgNode = document.createElement('img')
+        document.body.appendChild(imgNode)
+        var img = new Image()
+        img.onload = function () {
+          imgNode.src = img.src
+        }
+        imgNode.src = 'images/holder.png'
+        img.src = src
+      }
+
+      preLoad('https://raw.githubusercontent.com/wss-ttt/Test/master/test6/images/1.jpg')
     </script>
   </body>
 </html>
