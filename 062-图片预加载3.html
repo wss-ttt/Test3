@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img src="" alt="" />
+    <img src="" alt="" />
+    <script>
+      var myImage = (function (imgNode) {
+        var imgNode = document.createElement('img')
+        document.body.appendChild(imgNode)
+        return {
+          setSrc: function (src) {
+            imgNode.src = src
+          }
+        }
+      })()
+
+      // 使用中间层进行代理
+      var proxyImage = (function () {
+        var img = new Image()
+        img.onload = function () {
+          myImage.setSrc(this.src)
+        }
+        return {
+          setSrc: function (src) {
+            img.src = src
+            myImage.setSrc('images/2.png')
+          }
+        }
+      })()
+      proxyImage.setSrc('images/1.png')
+    </script>
+  </body>
+</html>

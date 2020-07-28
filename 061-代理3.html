@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+
+  <body>
+    <img src="images/1.png" alt="" />
+    <script>
+      var Flower = function (name) {
+        this.name = name
+      }
+      var xm = {
+        sendFlower: function (target) {
+          var flower = new Flower('玫瑰')
+          target.receiveFlower(flower)
+        }
+      }
+      // 使用一个中间的代理模式
+      var B = {
+        receiveFlower: function (flower) {
+          A.listenGoodMood(function () {
+            A.receiveFlower(flower)
+          })
+        }
+      }
+      var A = {
+        receiveFlower: function (flower) {
+          console.log('收到了', flower.name)
+        },
+        listenGoodMood: function (fn) {
+          setTimeout(function () {
+            fn()
+          }, 10000)
+        }
+      }
+      xm.sendFlower(B)
+    </script>
+  </body>
+</html>
