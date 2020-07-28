@@ -15,6 +15,7 @@
   <body>
     <img src="" alt="" />
     <script>
+      // 创建一个普通的本地对象
       var myImage = (function () {
         var imgNode = document.createElement('img')
         document.body.appendChild(imgNode)
@@ -24,7 +25,8 @@
           }
         }
       })()
-      myImage.setSrc('images/1.png')
+      // 直接把请求发个本体对象
+      myImage.setSrc('https://raw.githubusercontent.com/wss-ttt/Test/master/test6/images/1.jpg')
     </script>
   </body>
 </html>
