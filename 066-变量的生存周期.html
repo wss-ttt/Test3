@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      var func = function () {
+        var a = 1
+        return function () {
+          arr++
+          console.log(a)
+        }
+      }
+
+
+      var f = func()
+      f() // 2
+      f() // 3
+      f() // 4
+    </script>
+  </body>
+</html>

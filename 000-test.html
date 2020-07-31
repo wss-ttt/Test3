@@ -1,71 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .container {
-      width: 400px;
-      height: 400px;
-      background: #ccc;
-      overflow: hidden;
-    }
-
-    .inner {
-      width: 200%;
-      height: 100%;
-      display: flex;
-      transition: all 1s;
-    }
-
-    .item {
-      flex: 1;
-    }
-
-    .item:first-child {
-      background: red;
-    }
-
-    .item:last-child {
-      background: green;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="container">
-    <div class="inner">
-      <div class="item">1</div>
-      <div class="item">2</div>
-    </div>
-  </div>
-  <button type="button">切换</button>
-  <script>
-    const scores = [{
-        subject: 'math',
-        score: 88
-      },
-      {
-        subject: 'chinese',
-        score: 95
-      },
-      {
-        subject: 'english',
-        score: 80
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 400px;
+        height: 400px;
+        background: #ccc;
+        overflow: hidden;
       }
-    ];
-    const dis = {
-      math: 0.5,
-      chinese: 0.3,
-      english: 0.2
-    }
-    const sum = scores.reduce((pre, item) => {
-      return pre + item.score * dis[item.subject]
-    }, 0)
-    console.log(sum) // 88.5
-  </script>
-</body>
 
+      .inner {
+        width: 200%;
+        height: 100%;
+        display: flex;
+        transition: all 1s;
+      }
+
+      .item {
+        flex: 1;
+      }
+
+      .item:first-child {
+        background: red;
+      }
+
+      .item:last-child {
+        background: green;
+      }
+      .box {
+        width: 200px;
+        height: 200px;
+        background-color: #ccc;
+      }
+      .inner {
+        width: 50%;
+        height: 100%;
+        background-color: red;
+        padding: 0 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <button type="button">确定</button>
+    <div class="box">
+      <div class="inner"></div>
+    </div>
+    <script>
+      // // 终极继承
+      // function SwiperClass(name, age) {
+      //   this.name = name
+      //   this.age = age
+      // }
+      // SwiperClass.prototype.say = function () {
+      //   console.log('姓名', this.name, '年龄', this.age)
+      // }
+
+      // function Swiper(skill) {
+      //   this.skill = skill
+      //   // 调用父类的构造函数
+      //   SwiperClass.call(this)
+      // }
+
+      // console.log('SwiperClass.prototype', SwiperClass.prototype)
+      // Swiper.prototype = Object.create(SwiperClass && SwiperClass.prototype)
+      // Swiper.prototype.constructor = Swiper
+
+      // Swiper.prototype.init = function () {
+      //   console.log('swiper init')
+      // }
+      // var swiper = new Swiper('打球')
+      // // debugger
+      // console.log(swiper)
+
+      /* function test(fn) {
+          return function(){
+            var args = Array.prototype.slice.apply(arguments)
+            return fn.apply(null, args)
+          }
+        }
+
+        function fn(data) {
+          console.log('aaa', data)
+        }
+
+        let a = test(fn)
+        a({
+          msg: '好好'
+        })
+ */
+      // 使用自执行函数
+
+      /* var _test = (function (fn) {
+        return function () {
+          var args = Array.prototype.slice.apply(arguments)
+          return fn.apply(null, args)
+        }
+      })(fn)
+
+      function fn(data) {
+        console.log(data)
+      }
+      _test({
+        msg: 'aa'
+      }) */
+
+      /* function test() {
+        // test2(arguments) // 这样是不行的
+        // 通过apply来调用test2函数
+        test2.apply(null, arguments)
+      }
+
+      function test2(a, b, c, d) {
+        console.log(a, b, c, d)
+      }
+
+      test(1, 2, 3, 4) */
+
+      /* var timer = null
+      var btns = document.querySelectorAll('button')
+      timer = setTimeout(() => {
+        console.log('aaa')
+      }, 0)
+      console.log(timer)
+      btns[0].onclick = function() {
+        clearTimeout(timer)
+        console.log('timer', timer) 
+      } */
+      let o = {
+        'test/msg': '好后'
+      }
+      console.log(o['test/msg'])
+    </script>
+  </body>
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 400px;
+        height: 400px;
+        background: #ccc;
+        overflow: hidden;
+      }
+
+      .inner {
+        width: 200%;
+        height: 100%;
+        display: flex;
+        transition: all 1s;
+      }
+
+      .item {
+        flex: 1;
+      }
+
+      .item:first-child {
+        background: red;
+      }
+
+      .item:last-child {
+        background: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <button type="button">确定</button>
+    <script>
+      // let p = Promise.resolve()
+      // console.log(p)
+
+    </script>
+  </body>
+</html>
