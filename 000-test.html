@@ -1,71 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*  console.log(1)
+      setTimeout(function () {
+        console.log(2)
+      }, 0)
+      new Promise(function (resolve) {
+        console.log(3)
+        for (var i = 0; i < 100; i++) {
+          i === 99 && resolve()
+        }
+        console.log(4)
+      }).then(function () {
+        console.log(5)
+      })
+      console.log(6) */
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .container {
-      width: 400px;
-      height: 400px;
-      background: #ccc;
-      overflow: hidden;
-    }
+      /* let p = Promise.resolve({
+        msg: '好好'
+      })
 
-    .inner {
-      width: 200%;
-      height: 100%;
-      display: flex;
-      transition: all 1s;
-    }
+      p.then(data => {
+        console.log(data)
+      }) */
 
-    .item {
-      flex: 1;
-    }
+      /* let p = Promise.reject({
+        msg: '错误了'
+      })
 
-    .item:first-child {
-      background: red;
-    }
+      p.catch(data => {
+        console.log(data)
+      }) */
 
-    .item:last-child {
-      background: green;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="container">
-    <div class="inner">
-      <div class="item">1</div>
-      <div class="item">2</div>
-    </div>
-  </div>
-  <button type="button">切换</button>
-  <script>
-    const scores = [{
-        subject: 'math',
-        score: 88
-      },
-      {
-        subject: 'chinese',
-        score: 95
-      },
-      {
-        subject: 'english',
-        score: 80
+      var normalizeNamespace = function (fn) {
+        return function () {
+          return fn()
+        }
       }
-    ];
-    const dis = {
-      math: 0.5,
-      chinese: 0.3,
-      english: 0.2
-    }
-    const sum = scores.reduce((pre, item) => {
-      return pre + item.score * dis[item.subject]
-    }, 0)
-    console.log(sum) // 88.5
-  </script>
-</body>
 
+
+      
+
+
+      var mapState = normalizeNamespace()
+      console.log(mapState)
+      /* var mapState = normalizeNamespace(function (state) {
+        var res = {}
+        normalizeMap(state).forEach(ref => {
+          var key = ref.key
+          var val = ref.val
+          console.log(key, val)
+        })
+        // 其中有个循环遍历操作
+        return res
+      }) */
+
+      function normalizeMap(map) {
+        return Array.isArray(map)
+          ? map.map(function (key) {
+              return { key: key, val: key }
+            })
+          : Object.keys(map).map(function (key) {
+              return { key: key, val: map[key] }
+            })
+      }
+
+      // 调用方法
+      // debugger
+      // mapState({
+      //   name: function () {
+      //     console.log('好好学习')
+      //   }
+      // })
+
+
+
+
+      var test = function(fn) {
+        var a = 10
+        return function() {
+          var b = 20
+          return fn(++a, ++b)
+        }
+      }
+
+      var res = test(function(a, b) {
+        console.log('aaa', a, b)
+      })
+      res() // 11 21
+      res() // 12 21
+      res() // 23 21
+    </script>
+  </body>
 </html>
