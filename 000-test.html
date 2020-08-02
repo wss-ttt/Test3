@@ -7,95 +7,34 @@
   </head>
   <body>
     <script>
-      /*  console.log(1)
-      setTimeout(function () {
-        console.log(2)
-      }, 0)
-      new Promise(function (resolve) {
-        console.log(3)
-        for (var i = 0; i < 100; i++) {
-          i === 99 && resolve()
-        }
-        console.log(4)
-      }).then(function () {
-        console.log(5)
-      })
-      console.log(6) */
-
-      /* let p = Promise.resolve({
-        msg: '好好'
-      })
-
-      p.then(data => {
-        console.log(data)
-      }) */
-
-      /* let p = Promise.reject({
-        msg: '错误了'
-      })
-
-      p.catch(data => {
-        console.log(data)
-      }) */
-
-      var normalizeNamespace = function (fn) {
-        return function () {
-          return fn()
-        }
+      function Person(name) {
+        this.name = 
+        this.age = age
+      }
+      Person.prototype.say = function () {
+        console.log('aaa')
       }
 
+      var  p = new Person();
 
-      
-
-
-      var mapState = normalizeNamespace()
-      console.log(mapState)
-      /* var mapState = normalizeNamespace(function (state) {
-        var res = {}
-        normalizeMap(state).forEach(ref => {
-          var key = ref.key
-          var val = ref.val
-          console.log(key, val)
-        })
-        // 其中有个循环遍历操作
-        return res
-      }) */
-
-      function normalizeMap(map) {
-        return Array.isArray(map)
-          ? map.map(function (key) {
-              return { key: key, val: key }
-            })
-          : Object.keys(map).map(function (key) {
-              return { key: key, val: map[key] }
-            })
+      var Person = function() {
+        this.hobby = '睡觉'
       }
-
-      // 调用方法
-      // debugger
-      // mapState({
-      //   name: function () {
-      //     console.log('好好学习')
-      //   }
-      // })
-
-
-
-
-      var test = function(fn) {
-        var a = 10
-        return function() {
-          var b = 20
-          return fn(++a, ++b)
+      // 通过闭包实现模块化 创建类
+      var Student = (function () {
+        function Student(name, age) {
+          this.name = name
+          this.age = age
         }
-      }
-
-      var res = test(function(a, b) {
-        console.log('aaa', a, b)
-      })
-      res() // 11 21
-      res() // 12 21
-      res() // 23 21
+        Student.prototype = Object.create(Person.prototype)
+        Student.constructor = Student
+        Student.prototype.say = function () {
+          console.log('aaa')
+        }
+        return Student
+      })()
+      var s = new Student('乔峰', 18)
+      console.log(s)
     </script>
   </body>
 </html>
