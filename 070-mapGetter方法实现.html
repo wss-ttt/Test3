@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      let state = {
+        msg: '好好学习'
+      }
+      let getters = {
+        newMsg() {
+          return state.msg + '哈哈...'
+        }
+      }
+      function normalizeMap(map) {
+        return Array.isArray(map)
+          ? map.map(function (key) {
+              return { key: key, val: key }
+            })
+          : Object.keys(map).map(function (key) {
+              return { key: key, val: map[key] }
+            })
+      }
+      function mapGetters(opt) {
+        let res = normalizeMap(opt) // 转换成了数组
+        let so = {}
+        res.forEach(item => {
+          if(item['val'] in getters) {
+            // 说明存在
+            so[item['key']] = getters[item['val']]()
+          } else {
+            console.error('[vuex] unknown getter', item['val'])
+            return
+          }
+
+        })
+        return so
+      }
+
+      let res = {
+        tagList() {
+          return [1, 2, 3]
+        },
+        ...mapGetters(['newMsg'])
+      }
+      console.log(res)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function normalizeMap(map) {
+        return Array.isArray(map)
+          ? map.map(function (key) {
+              return { key: key, val: key }
+            })
+          : Object.keys(map).map(function (key) {
+              return { key: key, val: map[key] }
+            })
+      }
+
+      function normalizeNamespace(fn) {
+        return function (namespace, map) {
+          if (typeof namespace !== 'string') {
+            map = namespace
+            namespace = ''
+          } else if (namespace.charAt(namespace.length - 1) !== '/') {
+            namespace += '/'
+          }
+          return fn(namespace, map)
+        }
+      }
+
+      
+
+      var mapState = normalizeNamespace(function (namespace, states) {
+        var res = {}
+        normalizeMap(states).forEach(function (ref) {
+          var key = ref.key
+          var val = ref.val
+
+          res[key] = function mappedState() {
+            var state = this.$store.state
+            var getters = this.$store.getters
+            if (namespace) {
+              var module = getModuleByNamespace(
+                this.$store,
+                'mapState',
+                namespace
+              )
+              if (!module) {
+                return
+              }
+              state = module.context.state
+              getters = module.context.getters
+            }
+            return typeof val === 'function'
+              ? val.call(this, state, getters)
+              : state[val]
+          }
+          res[key].vuex = true
+        })
+        return res
+      })
+
+      function getModuleByNamespace(store, helper, namespace) {
+        var module = store._modulesNamespaceMap[namespace]
+        if ('development' !== 'production' && !module) {
+          console.error(
+            '[vuex] module namespace not found in ' +
+              helper +
+              '(): ' +
+              namespace
+          )
+        }
+        return module
+      }
+    </script>
+    <script>
+      mapState({
+
+      })
+    </script>
+  </body>
+</html>

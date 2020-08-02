@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      function normalizeMap(map) {
+        return Array.isArray(map)
+          ? map.map(function (key) {
+              return { key: key, val: key }
+            })
+          : Object.keys(map).map(function (key) {
+              return { key: key, val: map[key] }
+            })
+      }
+
+      console.log(
+        normalizeMap({
+          name: '张三',
+          sex: '男'
+        })
+      )
+
+      console.log(normalizeMap(['user', 'common']))
+
+      let state = {
+        user: {
+          hasLogin: false
+        },
+        common: {
+          name: '乔峰'
+        }
+      }
+      function mapState(opt) {
+        let res = normalizeMap(opt) // 转换成了数组
+        let so = {}
+        res.forEach(item => {
+          if (typeof item['val'] === 'function') {
+            // 如果是函数
+            so[item['key']] = item['val'](state) // 把state作为参数传递过去
+          } else {
+            // 如果是数组的形式
+            so[item['key']] = state[item['val']]
+          }
+        })
+        return so
+      }
+
+      let res = {
+        tagList() {
+          return [1, 2, 3]
+        },
+        ...mapState({
+          hasLogin: state => state.user.hasLogin,
+          name: state => state.common.name
+        })
+        // ...mapState(['user', 'common'])
+      }
+      console.log(res)
+    </script>
+  </body>
+</html>

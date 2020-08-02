@@ -7,7 +7,9 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global.Vuex = factory());
-}(this, (function () { 'use strict';
+}(this, (function () { 
+  
+'use strict';
 
 var applyMixin = function (Vue) {
   var version = Number(Vue.version.split('.')[0]);
