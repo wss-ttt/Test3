@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function normalizeNamespace(fn) {
+        return function (state) {
+          return fn(state)
+        }
+      }
+      function normalizeMap(map) {
+        return Array.isArray(map)
+          ? map.map(function (key) {
+              return { key: key, val: key }
+            })
+          : Object.keys(map).map(function (key) {
+              return { key: key, val: map[key] }
+            })
+      }
+      var mapState = normalizeNamespace(function (state) {
+        var res = {}
+        normalizeMap(state).forEach(ref => {
+          var key = ref.key
+          var val = ref.val
+          res[key] = function() {
+          }
+        })
+        // 其中有个循环遍历操作
+        return res
+      })
+
+      // 最后在vue文件中调用mapState方法
+      var res = mapState({
+        name: state => state.user.name,
+        age: state => state.user.age
+      })
+      console.log(res)
+
+      var res2 = mapState(['user', 'dept'])
+      console.log(res2)
+    </script>
+  </body>
+</html>

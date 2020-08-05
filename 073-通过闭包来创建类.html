@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 通过闭包实现模块化 创建类
+      var Person = (function () {
+        function Person(name, age) {
+          this.name = name
+          this.age = age
+        }
+        Person.prototype.say = function () {
+          console.log('aaa')
+        }
+        // 注意这个地方,最终返回构造函数
+        return Person
+      })()
+
+      var p = new Person('乔峰', 18)
+      console.log(p)
+    </script>
+  </body>
+</html>

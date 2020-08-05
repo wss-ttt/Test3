@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var decode = decodeURIComponent
+
+      function parseQuery(query) {
+        var res = {}
+
+        query = query.trim().replace(/^(\?|#|&)/, '')
+
+        if (!query) {
+          return res
+        }
+        debugger
+        let arr = query.split('&')
+        arr.forEach(function (param) {
+          var parts = param.replace(/\+/g, ' ').split('=')
+          var key = decode(parts.shift())
+          var val = parts.length > 0 ? decode(parts.join('=')) : null
+
+          if (res[key] === undefined) {
+            res[key] = val
+          } else if (Array.isArray(res[key])) {
+            res[key].push(val)
+          } else {
+            res[key] = [res[key], val]
+          }
+        })
+
+        return res
+      }
+
+      console.log(parseQuery('name=乔峰&age=18'))
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background: #fb3;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="checkbox" value="1" />1 <input type="checkbox" value="2" />2
+    <input type="checkbox" value="3" />3 <input type="checkbox" value="4" />4
+    <button type="button">确定</button>
+    <div id="box"></div>
+    <script>
+      document.getElementById = (function (fn) {
+        return function () {
+          console.log(arguments)
+          return fn.apply(document, arguments)
+        }
+      })(document.getElementById)
+
+      var getId = document.getElementById
+      console.log(getId('box'))
+
+      // 常规做法
+      /* let getId = function(id) {
+        return document.getElementById(id)
+      } */
+      let getId = function(id) {
+        return document.getElementById(id)
+      }
+      let getId = document.getElementById
+      console.log(getId('box'))
+
+
+
+    </script>
+  </body>
+</html>

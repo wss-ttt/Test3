@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 创建一个父类
+      var Person = function (name, age) {
+        this.name = name
+        this.age = age
+      }
+      Person.prototype.say = function () {
+        console.log('我能说话')
+      }
+
+      var Student = (function () {
+        function Student(name, age, task) {
+          // 实例上的属性继承,调用父类的构造器
+          Person.call(this, name, age)
+          // 添加自己特有的属性
+          this.task = task
+        }
+
+        // 原型对象上的属性继承
+        Student.prototype = Object.create(Person.prototype)
+        Student.constructor = Student
+        // 在自己的原型对象上添加自己特有是行为
+        Student.prototype.target = function () {
+          console.log('我们的主要工作就是好好学习')
+        }
+        return Student
+      })()
+
+      var s = new Student('张三', 18, '学习')
+      console.log(s)
+    </script>
+  </body>
+</html>
