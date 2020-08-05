@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">确定</div>
+    <script>
+      let box = document.querySelector('.box')
+      var addEvent = function (ele, type, fn) {
+        if (window.addEventListener) {
+          ele.addEventListener(type, fn, false)
+        } else if (window.attachEvent) {
+          ele.attachEvent('on' + type, fn)
+        } else {
+          ele['on' + type] = fn
+        }
+      }
+
+      // 优化版v0.1
+      var _addEvent = (function () {
+        if (window.addEventListener) {
+          return function (ele, type, fn) {
+            ele.addEventListener(type, fn, false)
+          }
+        } else if (window.attachEvent) {
+          return function (ele, type, fn) {
+            ele.attachEvent('on' + type, fn)
+          }
+        } else {
+          return function (ele, type, fn) {
+            ele['on' + type] = fn
+          }
+        }
+      })() // 自执行函数
+
+      // 优化版v0.2
+      var __addEvent = function (ele, type, fn) {
+        if (window.addEventListener) {
+          // 重写自身
+          __addEvent = function (ele, type, fn) {
+            ele.addEventListener(type, fn, false)
+          }
+        } else if (window.attachEvent) {
+          __addEvent = function (ele, type, fn) {
+            ele.attachEvent('on' + type, fn)
+          }
+        } else {
+          __addEvent = function (ele, type, fn) {
+            ele['on' + type] = fn
+          }
+        }
+        __addEvent(ele, type, fn)
+      }
+
+      __addEvent(box, 'click', function() {
+        console.log(1)
+      })
+
+      __addEvent(box, 'click', function() {
+        console.log(2)
+      })
+
+    </script>
+  </body>
+</html>
