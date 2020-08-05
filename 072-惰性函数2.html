@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">确定</div>
+    <script>
+      function person(name) {
+        if (name == 'jack') {
+          return (person = function () {
+            console.log('this is jack')
+          })
+        } else if (name == 'tom') {
+          return (person = function () {
+            console.log('this is tom')
+          })
+        } else {
+          return (person = function () {
+            console.log('this is others')
+          })
+        }
+      }
+      person('jack')()
+      console.log(1)
+      person()
+    </script>
+  </body>
+</html>
