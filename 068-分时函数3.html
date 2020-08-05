@@ -15,17 +15,20 @@
   <body>
     <script>
       var ary = []
-      for (var i = 0; i <= 1000; i++) {
+      for (var i = 0; i <= 100; i++) {
         ary.push(i) // 假设有1000个好友
       }
-      var renderFriendList = function (data) {
-        for (var i = 0; i < data.length; i++) {
-          var div = document.createElement('div')
-          div.innerHTML = i
+
+      var timer = null
+      timer = setInterval(() => {
+        for(var i =0;i< Math.min(8 | 1, ary.length);i++) {
+          var obj = ary.shift()
+          let div = document.createElement('div')
+          div.innerHTML = obj;
           document.body.appendChild(div)
         }
-      }
-      renderFriendList(ary)
+      }, 200);
+
     </script>
   </body>
 </html>
