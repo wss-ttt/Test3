@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">确定</div>
+    <script>
+      var name = '乔峰'
+      function person() {
+        if(name === 'jack') {
+          console.log('this is jack')
+        } else if (name === 'tom') {
+          console.log('this is tom')
+        } else {
+          console.log('this is others')
+        }
+      }
+      function _person() {
+        if (name == 'jack') {
+          console.log('this is jack')
+          // 对自身重新赋值
+          return (person = function () {
+            console.log('this is jack')
+          })
+        } else if (name == 'tom') {
+          console.log('this is tom')
+          // 对自身重新赋值
+          return (person = function () {
+            console.log('this is tom')
+          })
+        } else {
+          console.log('this is others')
+          // 对自身重新赋值
+          return (person = function () {
+            console.log('this is others')
+          })
+        }
+      }
+      person()
+      person()
+
+      _person()
+      _person()
+    </script>
+  </body>
+</html>

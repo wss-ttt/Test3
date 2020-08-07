@@ -15,24 +15,37 @@
   <body>
     <div class="box">确定</div>
     <script>
-      function person(name) {
-        if (name == 'jack') {
-          return (person = function () {
-            console.log('this is jack')
-          })
-        } else if (name == 'tom') {
-          return (person = function () {
-            console.log('this is tom')
-          })
+      function createXHR() {
+        var xhr
+        if (typeof XMLHttpRequest != 'undefined') {
+          xhr = new XMLHttpRequest()
+          createXHR = function () {
+            return new XMLHttpRequest()
+          }
         } else {
-          return (person = function () {
-            console.log('this is others')
-          })
+          try {
+            xhr = new ActiveXObject('Msxml2.XMLHTTP')
+            createXHR = function () {
+              return new ActiveXObject('Msxml2.XMLHTTP')
+            }
+          } catch (e) {
+            try {
+              xhr = new ActiveXObject('Microsoft.XMLHTTP')
+              createXHR = function () {
+                return new ActiveXObject('Microsoft.XMLHTTP')
+              }
+            } catch (e) {
+              createXHR = function () {
+                return null
+              }
+            }
+          }
         }
+        return xhr
       }
-      person('jack')()
-      console.log(1)
-      person()
+      var xhr = createXHR()
+      var xhr2 = createXHR()
+
     </script>
   </body>
 </html>
