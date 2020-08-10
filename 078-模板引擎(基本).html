@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="person-info">
+      <script id="person-info-template" type="text/html">
+        姓名: {{ name }}
+        <br>
+        年龄: {{ age }}
+      </script>
+    </div>
+
+    <h2>循环</h2>
+    <div class="person-info2">
+      <script id="person-info2-template" type="text/html">
+        {{ each $data }}
+        序号: {{ $index }} <br>
+        姓名: {{ $value.name }} <br>
+        年龄: {{ $value.age }} <br>
+        {{ /each }}
+      </script>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/template-web.js"></script>
+    <script>
+      let o = {
+        name: '乔峰',
+        age: 18
+      }
+      console.log(template)
+      var html = template('person-info-template', o)
+      $('.person-info').html(html)
+
+      var list = [{
+        name: '乔峰',
+        age: 18
+      }, {
+        name: '杨过',
+        age: 20
+      }, {
+        name: '小龙女',
+        age: 22
+      }]
+      var html2 = template('person-info2-template', list)
+      $('.person-info2').html(html2)
+    </script>
+  </body>
+</html>

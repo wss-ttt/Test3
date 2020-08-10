@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>循环</h2>
+    <div class="person-info">
+      <script id="person-info-template" type="text/html">
+        {{ each $data }}
+        序号: {{ $index }} <br>
+        姓名: {{ $value.name }} <br>
+        年龄: {{ $value.age }} <br>
+        {{ if $value.sex === 0 }}
+        性别: 男 <br>
+        {{ else }}
+        性别: 女 <br> 
+        {{ /if }}
+        {{ /each }}
+      </script>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/template-web.js"></script>
+    <script>
+      var list = [
+        {
+          name: '乔峰',
+          age: 18,
+          sex: 0 // 0: 男 1: 女
+        },
+        {
+          name: '杨过',
+          age: 20,
+          sex: 0
+        },
+        {
+          name: '小龙女',
+          age: 22,
+          sex: 1
+        }
+      ]
+      var html = template('person-info-template', list)
+      $('.person-info').html(html)
+    </script>
+  </body>
+</html>
