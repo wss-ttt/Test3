@@ -5089,7 +5089,7 @@
 
       // additional parameters
       var args = toArray(arguments, 1);
-      args.unshift(this);
+      args.unshift(this); // 向数组的头部添加值
       if (typeof plugin.install === 'function') {
         plugin.install.apply(plugin, args);
       } else if (typeof plugin === 'function') {
