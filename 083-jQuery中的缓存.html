@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="js/jquery.js"></script>
+    <script>
+      var Expr = {
+        cacheLength: 5 // 缓存容量大小为5
+      }
+      function createCache() {
+        var keys = []
+
+        function cache(key, value) {
+          // Use (key + " ") to avoid collision with native prototype properties (see Issue #157)
+          if (keys.push((key += ' ')) > Expr.cacheLength) {
+            // Only keep the most recent entries
+            delete cache[keys.shift()]
+          }
+          return (cache[key] = value)
+        }
+        return cache
+      }
+      var cache = createCache()
+      cache('name', '乔峰')
+      var res = cache['name ']
+    </script>
+  </body>
+</html>
