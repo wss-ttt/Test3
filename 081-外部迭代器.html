@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="js/jquery.js"></script>
+    <script>
+      var Iterator = function (obj) {
+        var current = 0 // 索引
+        var next = function () {
+          current++
+        }
+        var size = function () {
+          return obj.length
+        }
+        var isDone = function () {
+          return current >= obj.length
+        }
+        var getCurrentItem = function () {
+          return obj[current]
+        }
+
+        return {
+          next,
+          isDone,
+          getCurrentItem,
+          size
+        }
+      }
+
+      var arr = ['aa', 'bb', 'cc']
+      // 创建一个迭代器
+      var it = Iterator(arr)
+      console.log(it.getCurrentItem()) // aa
+      it.next()
+      console.log(it.getCurrentItem()) // bb
+      it.next()
+      console.log(it.getCurrentItem()) // cc
+      it.next()
+      console.log(it.getCurrentItem()) // undefined
+
+      // 比较两个数组是否相等
+
+      var compare = function (it1, it2) {
+        var flag = true
+        if (it.size() !== it2.size()) {
+          return (flag = false)
+        }
+        while (!it1.isDone() && !it2.isDone()) {
+          if (it1.getCurrentItem() !== it2.getCurrentItem()) {
+            return (flag = false)
+          }
+          it1.next()
+          it2.next()
+        }
+        return flag
+      }
+
+      var arr1 = [1, 2, 3]
+      var arr2 = [1, 3, 3 ]
+      var it1 = Iterator(arr1)
+      var it2 = Iterator(arr2)
+      var flag = compare(it1, it2)
+      console.log('flag', flag)
+      if (flag) {
+        console.log('相等')
+      } else {
+        console.log('不相等')
+      }
+
+
+      function test() {
+        var it = Iterator(arguments)
+        console.log('aa', it.getCurrentItem())
+      }
+
+      test(1, 2, 3, 4)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="js/jquery.js"></script>
+    <script>
+      var each = function(arr, fn) {
+        for(var i = 0; i < arr.length;i++) {
+          fn.call(arr[i], i , arr[i])
+        }
+      }
+
+      var compare = function(arr1, arr2) {
+        if(arr1.length !== arr2.length) {
+          throw new Error('arr1和arr2不相等')
+        }
+        each(arr1, function(index, value) {
+          if(value !== arr1[index]) {
+            throw new Error('arr1和arr2不相等')
+          }
+        })
+        console.log('相等')
+      }
+
+      compare([1, 2, 3], [1, 2, 3, 4])
+      
+    </script>
+  </body>
+</html>
