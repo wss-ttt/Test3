@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul id="ul"></ul>
+    <script>
+      // 创建一个文档片段,相当于是一个容器
+      var fragment = document.createDocumentFragment(),
+        ul = document.querySelector('#ul')
+
+      for (var i = 0; i < 100; i++) {
+        var li = document.createElement('li')
+        li.innerHTML = 'a' + i
+        fragment.appendChild(li)
+      }
+      // 最后一次性添加到dom树中去
+      ul.appendChild(fragment)
+    </script>
+  </body>
+</html>
