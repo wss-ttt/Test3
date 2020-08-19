@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .content-tabs {
+        height: 50px;
+        width: 500px;
+        background: #ddd;
+        position: relative;
+        margin: 100px auto;
+        display: flex;
+      }
+      .menu-tab-content {
+        height: 100%;
+        flex: 1;
+        overflow: hidden;
+      }
+      .tabs-inner {
+        height: 100%;
+        display: flex;
+      }
+      .menu-tab {
+        width: 100px;
+        border-right: 1px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        background: #58a;
+      }
+      .btn {
+        width: 40px;
+        height: 100%;
+        border: none;
+        outline: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content-tabs">
+      <button class="btn btn-left" type="button">左</button>
+      <div class="menu-tab-content">
+        <div class="tabs-inner">
+          <div class="menu-tab">用户管理1</div>
+          <div class="menu-tab">用户管理2</div>
+          <div class="menu-tab">用户管理3</div>
+          <div class="menu-tab">用户管理4</div>
+          <div class="menu-tab">用户管理5</div>
+          <div class="menu-tab">用户管理6</div>
+          <div class="menu-tab">用户管理7</div>
+          <div class="menu-tab">用户管理8</div>
+          <div class="menu-tab">用户管理9</div>
+          <div class="menu-tab">用户管理10</div>
+          <div class="menu-tab">用户管理11</div>
+          <div class="menu-tab">用户管理12</div>
+          <div class="menu-tab">用户管理13</div>
+          <div class="menu-tab">用户管理14</div>
+          <div class="menu-tab">用户管理15</div>
+          <div class="menu-tab">用户管理16</div>
+          <div class="menu-tab">用户管理17</div>
+        </div>
+      </div>
+      <button class="btn btn-right" type="button">右</button>
+    </div>
+    <script src="jquery.js"></script>
+    <script>
+      // 计算元素集合的总宽度
+      function calSumWidth(elements) {
+        let width = 0
+        $(elements).each(function () {
+          width += $(this).outerWidth(true) // 包含margin的宽度
+        })
+        return width
+      }
+      function scrollTabLeft() {
+        let marginLeftVal = Math.abs(
+          parseInt($('.tabs-inner').css('margin-left')) + 50
+        )
+        // 可视区域非tab宽度
+        let tabOuterWidth = calSumWidth(
+          $('.content-tabs').children().not('.menu-tab-content')
+        )
+        //可视区域tab宽度
+        let visibleWidth = $('.content-tabs').outerWidth() - tabOuterWidth
+        //实际滚动宽度
+        let scrollVal = 0
+        if ($('.tabs-inner').width() < visibleWidth) {
+          return false
+        } else {
+          let tabElement = $('.menu-tab:first')
+          let offsetVal = 0
+          while (offsetVal + $(tabElement).outerWidth(true) <= marginLeftVal) {
+            //找到离当前tab最近的元素
+            offsetVal += $(tabElement).outerWidth(true)
+            tabElement = $(tabElement).next()
+          }
+          offsetVal = 0
+          if (calSumWidth($(tabElement).prevAll()) > visibleWidth) {
+            while (
+              offsetVal + $(tabElement).outerWidth(true) < visibleWidth &&
+              tabElement.length > 0
+            ) {
+              offsetVal += $(tabElement).outerWidth(true)
+              tabElement = $(tabElement).prev()
+            }
+            scrollVal = calSumWidth($(tabElement).prevAll())
+          }
+        }
+        $('.tabs-inner').animate(
+          {
+            marginLeft: 0 - scrollVal + 'px'
+          },
+          'fast'
+        )
+      }
+
+      // 查看右侧隐藏的选项卡
+      function scrollTabRight() {
+        let marginLeftVal = Math.abs(
+          parseInt($('.tabs-inner').css('margin-left'))
+        )
+        // 可视区域非tab宽度
+        let tabOuterWidth = calSumWidth(
+          $('.content-tabs').children().not('.menu-tab-content')
+        )
+        //可视区域tab宽度
+        let visibleWidth = $('.content-tabs').outerWidth() - tabOuterWidth
+        //实际滚动宽度
+        let scrollVal = 0
+        if ($('.tabs-inner').width() < visibleWidth) {
+          return false
+        } else {
+          let tabElement = $('.menu-tab:first')
+          let offsetVal = 0
+          while (offsetVal + $(tabElement).outerWidth(true) <= marginLeftVal) {
+            //找到离当前tab最近的元素
+            offsetVal += $(tabElement).outerWidth(true)
+            tabElement = $(tabElement).next()
+          }
+          offsetVal = 0
+          while (
+            offsetVal + $(tabElement).outerWidth(true) < visibleWidth &&
+            tabElement.length > 0
+          ) {
+            offsetVal += $(tabElement).outerWidth(true)
+            tabElement = $(tabElement).next()
+          }
+          scrollVal = calSumWidth($(tabElement).prevAll())
+          if (scrollVal > 0) {
+            $('.tabs-inner').animate(
+              {
+                marginLeft: 0 - scrollVal + 'px'
+              },
+              'fast'
+            )
+          }
+        }
+      }
+      $('button:eq(0)').on('click', scrollTabLeft)
+      $('button:eq(1)').on('click', scrollTabRight)
+    </script>
+  </body>
+</html>
