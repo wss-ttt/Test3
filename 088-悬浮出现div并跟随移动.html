@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+      }
+      .box {
+        width: 200px;
+        height: 150px;
+        background: #ccc;
+        margin: 5px;
+        cursor: pointer;
+      }
+      .info {
+        width: 200px;
+        height: 200px;
+        background: rgba(0, 0, 0, 0.3);
+        position: absolute;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        1
+      </div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+      <div class="box">4</div>
+      <div class="box">5</div>
+    </div>
+    <div class="info">aaa</div>
+    <script src="js/jquery.js"></script>
+    <script>
+
+      $('.box').on('mouseover', function(e) {
+        $('.info').css({
+          top: e.pageY,
+          left: e.pageX
+        }).show()
+
+        // 模拟请求
+        /* setTimeout(() => {
+          console.log('aa')
+        }, 1000) */
+
+        console.log(1)
+      })
+
+      $('.box').on('mouseout', function() {
+        $('.info').hide()
+      })
+
+      $('.box').on('mousemove', function(e) {
+        $('.info').css({
+          top: e.pageY + 40 + 'px',
+          left: e.pageX + 40 + 'px'
+        })
+      })
+      
+
+      function throttle(fn, interval = 300) {
+        let timer = null
+        return function () {
+          if (timer) return // 注意这个地方:  如果存在定时器，就直接返回了，什么也不需要执行   (这就是两者的核心区别了)
+          timer = setTimeout(() => {
+            // 使用了箭头函数
+            fn.apply(this, arguments) // 使用了apply方法
+            timer = null
+          }, interval)
+        }
+      }
+    </script>
+  </body>
+</html>
