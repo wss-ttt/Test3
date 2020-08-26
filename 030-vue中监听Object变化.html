@@ -136,6 +136,13 @@
       console.log('数据发生变化了')
       console.log(newVal, oldVal);
     })
+
+    // 再来一个数据监听
+    let w2 = new Watcher(person, 'name', function (newVal, oldVal) {
+      console.log('数据发生变化了2')
+      console.log(newVal, oldVal);
+    })
+
     // 1.取值操作
     person.name
 
