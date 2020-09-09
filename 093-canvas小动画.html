@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas">
+      Your browser does not support the HTML5 context tag.
+    </canvas>
+
+    <script>
+      var canvas = document.getElementById('canvas')
+      var context = canvas.getContext('2d')
+      // canvas.width = window.innerWidth //让画布大小等于屏幕大小
+      // canvas.height = window.innerHeight
+      canvas.width = 300
+      canvas.height = 300
+
+      //球
+      function ArcObj(x, y, dx, dy, r, color) {
+        this.x = x //x坐标
+        this.y = y //y坐标
+        this.dx = dx //x偏移速度
+        this.dy = dy //y偏移速度
+        this.r = r //半径
+        this.color = color //颜色
+
+        this.now_r = this.r //保存初始半径大小
+        this.max_r = 50 //半径最大值
+      }
+      //填充圆
+      ArcObj.prototype.draw = function () {
+        context.beginPath()
+        context.fillStyle = this.color
+        context.arc(this.x, this.y, this.r, 0, 2 * Math.PI)
+        context.fill()
+        context.closePath()
+      }
+      //圆动画
+      ArcObj.prototype.move = function () {
+        if (this.x + this.r > canvas.width || this.x - this.r < 0) {
+          //如果圆碰到屏幕边，将偏移量取反，圆向反方向移动
+          this.dx = -this.dx
+        }
+
+        if (this.y - this.r < 0 || this.y + this.r > canvas.height) {
+          //如果圆碰到屏幕边，将偏移量取反，圆向反方向移动
+          this.dy = -this.dy
+        }
+
+        //改变x，y坐标使圆移动
+        this.x += this.dx
+        this.y += this.dy
+
+        //鼠标经过时变大
+        //如果圆存在鼠标的x，y加上50个像素之内，圆进行变大，直到达到最大半径
+        if (
+          mouse.x + 50 > this.x &&
+          mouse.x - 50 < this.x &&
+          mouse.y + 50 > this.y &&
+          mouse.y - 50 < this.y
+        ) {
+          if (this.r < this.max_r) {
+            this.r += 1
+          }
+        }
+        //当不在范围之内时，逐渐减小，直到初始时大小
+        else if (this.r > this.now_r) {
+          this.r -= 1
+        }
+        this.draw()
+      }
+
+      //生成的球数组
+      let arrOb = []
+      //颜色
+      let color_arr = [
+        '#FF0000',
+        '#EE9A00',
+        '#EE00EE',
+        '#D2691E',
+        '#CD6839',
+        '#B8860B',
+        '#4B0082'
+      ]
+      //鼠标位置
+      let mouse = {
+        x: canvas.width / 2,
+        y: canvas.height / 2
+      }
+
+      for (let i = 0; i < 100; i++) {
+        let radius = Math.random() * 5 + 3
+        let x = Math.random() * (canvas.width - radius * 2) + radius
+        let y = Math.random() * (canvas.height - radius * 2) + radius
+        let dx = (Math.random() - 0.5) * 2
+        let dy = (Math.random()- 0.5) * 2
+
+        let color_index = Math.floor(Math.random() * 8)
+        arrOb.push(new ArcObj(x, y, dx, dy, radius, color_arr[color_index]))
+      }
+
+      function animate() {
+        //window.requestAnimationFrame() 告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画
+        //通常1秒执行60次
+        requestAnimationFrame(animate)
+
+        //
+        context.clearRect(0, 0, canvas.width, canvas.height)
+
+        //遍历生成的球，执行move方法，让其移动
+        for (let item of arrOb) {
+          item.move()
+        }
+      }
+
+      //监听鼠标移动事件，将鼠标位置记录
+      window.addEventListener('mousemove', function (event) {
+        mouse.x = event.clientX
+        mouse.y = event.clientY
+      })
+
+      animate()
+    </script>
+  </body>
+</html>
