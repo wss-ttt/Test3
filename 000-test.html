@@ -4,37 +4,124 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        /* overflow: hidden; */
+      }
+      .box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .box {
+        margin: 0 auto;
+      }
+    </style>
   </head>
   <body>
+    <div class="box">
+      <canvas id="canvas" style="border: 1px solid #ccc;background: #ffffff">
+        Your browser does not support the HTML5 canvas tag.
+      </canvas>
+    </div>
+    <div>aa</div>
+    <!-- <script>
+      var box = document.querySelector('.box')
+      box.style.width = window.innerWidth + 'px'
+      box.style.height = window.innerHeight + 'px'
+      box.style.background = 'red'
+    </script> -->
+
+
     <script>
-      function Person(name) {
-        this.name = 
-        this.age = age
-      }
-      Person.prototype.say = function () {
-        console.log('aaa')
+      var canvas = document.getElementById('canvas')
+      var context = canvas.getContext('2d')
+      var colors = [
+        '#FF0000',
+        '#EE9A00',
+        '#EE00EE',
+        '#D2691E',
+        '#CD6839',
+        '#B8860B',
+        '#4B0082'
+      ]
+      canvas.width = 300
+      canvas.height = 300
+      // 创建球的构造函数
+      function ArcObj(x, y, dx, dy, r, color) {
+        this.x = x //x坐标
+        this.y = y //y坐标
+        this.dx = dx //x偏移速度
+        this.dy = dy //y偏移速度
+        this.r = r //半径
+        this.color = color //颜色
+
+        this.now_r = this.r //保存初始半径大小
+        this.max_r = 50 //半径最大值
       }
 
-      var  p = new Person();
-
-      var Person = function() {
-        this.hobby = '睡觉'
+      ArcObj.prototype.draw = function () {
+        context.beginPath()
+        context.arc(this.x, this.y, this.r, 0, Math.PI * 2)
+        context.closePath()
+        context.fillStyle = this.color
+        context.fill()
       }
-      // 通过闭包实现模块化 创建类
-      var Student = (function () {
-        function Student(name, age) {
-          this.name = name
-          this.age = age
+
+      ArcObj.prototype.move = function () {
+        // 这样写 圆球的圆心碰到边缘才会反弹
+        /* if(this.x < 0 || this.x > canvas.width) {
+          // 改变方向
+          this.dx = -this.dx
         }
-        Student.prototype = Object.create(Person.prototype)
-        Student.constructor = Student
-        Student.prototype.say = function () {
-          console.log('aaa')
+        if(this.y < 0 || this.y > canvas.height) {
+          this.dy = -this.dy
+        } */
+
+        if (this.x - this.r < 0 || this.x + this.r > canvas.width) {
+          // 改变方向
+          this.dx = -this.dx
         }
-        return Student
-      })()
-      var s = new Student('乔峰', 18)
-      console.log(s)
+        if (this.y - this.r < 0 || this.y + this.r > canvas.height) {
+          this.dy = -this.dy
+        }
+        // 改变坐标点
+        this.x += this.dx
+        this.y += this.dy
+        this.draw()
+      }
+      var arr = []
+      for (var i = 0; i < 50; i++) {
+        var colorIndex = Math.floor(Math.random() * 7)
+        let radius = Math.random() * 5 + 3
+        let x = Math.random() * (canvas.width - radius * 2) + radius
+        let y = Math.random() * (canvas.height - radius * 2) + radius
+        // 这里可以产生负数
+        let dx = (Math.random() - 0.5) * 2
+        let dy = (Math.random() - 0.5) * 2
+        var a = new ArcObj(x, y, dx, dy, radius, colors[colorIndex])
+        arr.push(a)
+        a.draw()
+      }
+
+      animate()
+
+      function animate() {
+        // 需要清除画布
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        for (var i = 0; i < arr.length; i++) {
+          arr[i].move()
+        }
+        // 相当于定时器
+        requestAnimationFrame(animate)
+      }
+      
     </script>
+  
   </body>
 </html>
