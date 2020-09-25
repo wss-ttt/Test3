@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .toast-message {
+        padding: 10px;
+        border: 1px solid #ccc;
+        position: absolute;
+        left: 50%;
+        top: 10%;
+        transform: translateX(-50%);
+        border: 1px solid #ebeef5;
+        min-width: 380px;
+        transition: opacity 0.3s, transform 0.4s, top 0.4s,
+          -webkit-transform 0.4s;
+        padding: 15px 15px 15px 20px;
+        display: flex;
+        align-items: center;
+        z-index: 2000;
+        border-radius: 4px;
+      }
+      /* info */
+      .toast-message--info {
+        border-color: #ebeef5;
+        background-color: #edf2fc;
+        color: #909399;
+      }
+      /* warning */
+      .toast-message--warning {
+        border-color: #faecd8;
+        background-color: #fdf6ec;
+        color: #e6a23c;
+      }
+      /* error */
+      .toast-message--error {
+        border-color: #fde2e2;
+        background-color: #fef0f0;
+        color: #f56c6c;
+      }
+      /* success */
+      .toast-message--success {
+        background-color: #f0f9eb;
+        border-color: #e1f3d8;
+        color: #67c23a;
+      }
+    </style>
+  </head>
+  <body>
+    <button>info</button>
+    <button>warning</button>
+    <button>error</button>
+    <button>success</button>
+    <script>
+      ;(function (win) {
+        function createEle(tag, option, children) {
+          let ele = document.createElement(tag)
+          if (option.attrs) {
+            for (let i in option.attrs) {
+              ele.setAttribute(i, option.attrs[i])
+            }
+          }
+          if (option.props) {
+            for (let i in option.props) {
+              ele[i] = option.props[i]
+            }
+          }
+          if (children && children.length) {
+            for (let i = 0; i < children.length; i++) {
+              if (children[i]) {
+                ele.appendChild(children[i])
+              }
+            }
+          }
+          return ele
+        }
+
+        function closeEle(cb) {
+          return function (e) {
+            let event = e || window.event
+            event.target.parentNode.remove()
+            typeof cb === 'function' && cb()
+          }
+        }
+
+        function message(options) {
+          if (options) {
+            options =
+              typeof options === 'string'
+                ? { type: 'info', message: options }
+                : options
+            // 设置默认type值
+            options.type = options.type || 'info'
+          }
+          let st = createEle(
+            'div',
+            {
+              attrs: {
+                class:
+                  'toast-message ' +
+                  (options.type ? 'toast-message--' + options.type : '')
+              },
+              props: {
+                innerHTML: '好好学习',
+                onclick: function (e) {}
+              }
+            },
+            [
+              options.showClose
+                ? createEle('button', {
+                    attrs: { class: 'close' },
+                    props: {
+                      innerHTML: '关闭',
+                      // 传递关闭的回调函数
+                      onclick: closeEle(options.onClose)
+                      /* onclick: function(e) {
+                      let event = e || window.event
+                      event.target.parentNode.remove()
+                      options.onClose()
+                    } */
+                    }
+                  })
+                : null
+            ]
+          )
+          // 单例模式
+          let single = document.querySelector('.toast-message')
+          if (single) {
+            single.remove()
+          }
+          document.body.appendChild(st)
+          // 重新获取元素
+          single = document.querySelector('.toast-message')
+          // 通过setTimeout实现动画出现效果
+          st.style.top = '0'
+          setTimeout(function () {
+            st.style.top = '60px'
+            st.style.opacity = '1'
+          }, 30)
+
+          if (options.duration !== 0) {
+            setTimeout(() => {
+              single.remove()
+            }, options.duration || 3000)
+          }
+        }
+        // 暴露接口
+        win.message = message
+      })(window)
+    </script>
+    <script>
+      let btns = document.querySelectorAll('button')
+      btns[0].onclick = function () {
+        message({
+          type: 'info',
+          message: '成功',
+          showClose: true,
+          // 关闭的回调函数
+          onClose: function () {
+            alert('aa')
+          }
+        })
+      }
+      btns[1].onclick = function () {
+        message({
+          type: 'warning',
+          message: '警告'
+        })
+      }
+      btns[2].onclick = function () {
+        message({
+          type: 'error',
+          message: '错误'
+        })
+      }
+      btns[3].onclick = function () {
+        message({
+          type: 'success',
+          message: '成功'
+        })
+      }
+    </script>
+  </body>
+</html>
