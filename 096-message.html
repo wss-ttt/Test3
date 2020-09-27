@@ -139,11 +139,25 @@
             st.style.top = '60px'
             st.style.opacity = '1'
           }, 30)
+          let duration = options.duration || 3000
+          if (duration !== 0) {
+            let timer = null
+            timed()
+            function timed() {
+              timer = setTimeout(() => {
+                single.remove()
+              }, duration)
+            }
 
-          if (options.duration !== 0) {
-            setTimeout(() => {
-              single.remove()
-            }, options.duration || 3000)
+            // 移入清除定时器
+            single.onmouseover = function() {
+              clearTimeout(timer)
+            }
+
+            // 移出重新开启定时器
+            single.onmouseout = function() {
+              timed()
+            }
           }
         }
         // 暴露接口
