@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .box {
+        display: flex;
+        flex-direction: column-reverse;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 315px;
+        height: auto;
+        max-height: 100vh;
+        overflow: auto;
+        border: 1px solid red;
+      }
+      .item {
+        height: 119px;
+        background: #fb3;
+        margin-top: 10px;
+        flex-shrink: 0;
+        transition: height 0.7s cubic-bezier(0, 0.5, 0, 1);
+      }
+    </style>
+  </head>
+  <body>
+    <button type="button">确定</button>
+    <div class="box"></div>
+    <script>
+      let btn = document.querySelectorAll('button')
+      let box = document.querySelector('.box')
+      let count = 0
+      btn[0].onclick = function () {
+        count++
+        let item = document.createElement('div')
+        item.className = 'item'
+        item.innerHTML = `<h2>${count}</h2>
+          <div>好花红学习天天向上好花红学习天天向上好花红学习天天向上好花红学习天天向上</div> 
+        `
+        item.style.height = 0
+        setTimeout(() => {
+          item.style.height = '119px'
+        }, 0)
+        box.insertBefore(item, box.children[0])
+      }
+    </script>
+  </body>
+</html>
