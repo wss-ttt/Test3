@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas
+      id="myCanvas"
+      width="1000"
+      height="600"
+      `
+      style="border: 1px solid #d3d3d3; background: #ffffff"
+    >
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <script>
+      var canvas = document.getElementById('myCanvas')
+      var context = canvas.getContext('2d')
+      var baseRadin = 0
+      /**
+       *需求:
+       * 在(100,100)绘制一个(100,100)的矩形,并且旋转起来
+       * 技术点:
+       *  1.需要使用定时器,进行运动
+       */
+     /*  setInterval(function () {
+        console.log(1)
+        // 1.防止图形飞走,因为不会不停平移,
+        // .所以保存当前坐标轴的状态
+        context.save()
+        // 2.清除画布
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        // 3.平移 坐标轴
+        context.translate(150, 150)
+        // 4.旋转坐标轴
+        // 每次旋转4度
+        context.rotate((baseRadin += (Math.PI / 180) * 4))
+        // 5.绘制图形
+        context.fillRect(-50, -50, 100, 100)
+        // 6.平移旋转之后,滚动到最初的状态
+        context.restore()
+      }, 50) */
+      
+      /* context.save()
+      context.fillRect(100, 100, 100, 100)
+
+      context.translate(150, 150)
+      // context.restore()
+      context.fillRect(200, 200, 100, 100) */
+      setInterval(() => {
+        
+        context.save()
+        // 清除画布上的内容
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        // context.rotate((baseRadin += (Math.PI / 180) * 4))
+        context.rotate((Math.PI / 180) * 4)
+        context.fillRect(100, 100, 100, 100)
+        context.restore()
+      }, 1000)
+
+    </script>
+  </body>
+</html>

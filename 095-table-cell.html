@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 400px;
+      height: 50px;
+      background: #ccc;
+      display: table;
+    }
+    .box .item {
+      display: table-cell;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="item">
+      <span>icon</span>
+      <span>首页</span>
+    </div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <button type="button">确定</button>
+  </div>
+  <script src="js/jquery.js"></script>
+  <script>
+    
+    $('button').on('click',function() {
+      $.ajax({
+        url: 'http://192.168.0.58:8086/ssoLogin',
+        type: 'post',
+        data: {
+          userName: 'admin',
+          pwd: 'admin123'
+        },
+        success: function(res) {
+          console.log(res)
+          // setTimeout(function(){
+          //   window.location.href = res
+          // },1000)
+          
+        }
+      })
+    })
+  </script>
+</body>
+</html>

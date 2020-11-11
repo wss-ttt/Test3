@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <select id="test-select2" multiple="multiple"></select>
+  <button type="button" onclick="test()">确定</button>
+  <script src="js/jquery.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+  <script>
+    /* 你可以先解决一下你现在能解决的，现在剩余问题：
+    1、关键环节维度分析初始化查询条件问题
+    2、关键环节维度分析数据显示
+    3、标准表评估维度分析页面标准表弹窗查询问题
+    4、电能表质量管控页面图形渲染颜色从指定颜色里面顺序选择
+    5、风险预警展示页面数据无法展示，提示前端页面有问题
+    6、风险预警展示页面自适应有问题，在这边电脑看到不一样 */
+    let data = [{
+        id: '1',
+        text: "a"
+      },
+      {
+        id: '2',
+        text: "b"
+      },
+      {
+        id: '3',
+        text: "c"
+      },
+      {
+        id: '4',
+        text: "d"
+      },
+      {
+        id: '5',
+        text: "e"
+      },
+      {
+        id: '6',
+        text: "f"
+      },
+      {
+        id: '7',
+        text: "g"
+      }
+    ]
+
+    function test() {
+      // console.log($('#test-select2').val())
+      /* $('#test-select2').select2('destroy').empty()
+      $('#test-select2').select2({
+        language: "zh-CN",
+        width: "25%",
+        minimumResultsForSearch: -1,
+        data: data.slice(0,2)
+      }); */
+
+      // let a = $('#test-select2').select2('data')
+      // 回显方法1
+      // $('#test-select2').select2('val', '4')
+      // 回显方法2
+      $("#test-select2").val(['4', '2']).trigger("change")
+    }
+    $('#test-select2').select2({
+      language: "zh-CN",
+      width: "25%",
+      minimumResultsForSearch: -1,
+      data: data//data使用对象数组[{},{}] 必须的属性是id text,可以自定义添加属性
+    });
+
+    //j进行回显
+    // $('#test-select2').select2('val', '4')
+
+    console.log(typeof JSON.parse('["a", "b", "c"]'))
+  </script>
+</body>
+
+</html>

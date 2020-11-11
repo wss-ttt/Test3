@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="box">
+      <script id="template-var" type="text/html">
+        <span>
+          {{$imports.msg}}      
+        </span>
+      </script>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/template-web.js"></script>
+    <script>
+      // 定义一个变量
+      template.defaults.imports.msg = '好好学习'
+      let html = template('template-var', {})
+      $('.box').html(html)
+    </script>
+  </body>
+</html>

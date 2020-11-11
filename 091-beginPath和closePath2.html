@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas
+      id="myCanvas"
+      width="1000"
+      height="300"`
+      style="border: 1px solid #d3d3d3; background: #ffffff"
+    >
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <script>
+      var context = document.getElementById('myCanvas').getContext('2d')
+      var colors = ['red', 'green', 'blue']
+      for (var i = 0; i < 3; i++) {
+        // 开始一个新的路径
+        context.beginPath()
+        // 绘制一个画形路径(此时页面上看不到任何东西)
+        context.arc(50 + i * 100, 60, 40, 0, (2 * Math.PI * (i + 1)) / 10)
+        // 闭合路径
+        context.closePath()
+        context.lineWidth = 2
+        // 设置描边颜色
+        context.fillStyle = colors[i]
+        // 开始描边
+        context.fill()
+      }
+    </script>
+  </body>
+</html>

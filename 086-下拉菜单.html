@@ -1,66 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>美化下拉框</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" href="css/cui.css" />
     <style>
       * {
         margin: 0;
         padding: 0;
       }
-      ul, li {
+      body {
+        color: #555;
+        font-size: 14px;
+        font-family: '微软雅黑', 'Microsoft Yahei';
+        background-color: #eee;
+      }
+      ul,
+      li {
         list-style: none;
       }
-      a {
-        text-decoration: none;
-        color: #000;
-      }
-      ul.box > li.user {
-        width: 100px;
-        height: 40px;
-      }
-      ul.box > li.user > a {
-        width: 100%;
-        height: 100%;
-        display: block;
-        background: #ccc;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      .wrap {
+        width: 500px;
+        margin: 100px auto;
       }
 
-      ul.box > li.user:hover .dropdown-menu {
+      .select {
+        width: 245px;
+        padding: 0 10px;
+        height: 38px;
+        border: 1px solid #999;
+        position: relative;
+        box-shadow: 0 0 5px #999;
+      }
+
+      .select.open::after {
+        transform: rotate(180deg);
+      }
+
+      .select::after {
+        position: absolute;
+        right: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+        content: '';
+        width: 0;
+        height: 0;
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+        border-top: 6px solid #666;
+        transition: all 0.3s;
+      }
+
+      .select input {
         display: block;
+        width: 100%;
+        height: 38px;
+        line-height: 1;
+        border: 0;
+        outline: 0;
+        background: none;
       }
-      ul.box > li > .dropdown-menu {
-        background: #fb3;
-        width: 100px;
+
+      .select ul {
+        width: 100%;
         display: none;
+        position: absolute;
+        left: -1px;
+        top: 38px;
+        overflow: hidden;
+        background-color: #fff;
+        max-height: 150px;
+        overflow-y: auto;
+        border: 1px solid #999;
+        border-top: 0;
+        box-shadow: 0 3px 5px #999;
+        z-index: 9999;
+        /*添加动画效果*/
+        animation: upbit 0.3s;
       }
-      ul.box > li > .dropdown-menu > li {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+
+      .select ul li {
         height: 30px;
-        border-bottom: 1px solid #fff;
+        line-height: 30px;
+        overflow: hidden;
+        padding: 0 10px;
         cursor: pointer;
       }
 
+      .select ul li:hover {
+        background-color: #e0e0e0;
+      }
+
+      .content {
+        width: 500px;
+        height: 500px;
+        background-color: #ccc;
+      }
+      /*添加动画效果*/
+
+      @-webkit-keyframes upbit {
+        from {
+          -webkit-transform: translate3d(0, 30px, 0);
+          opacity: 0.3;
+        }
+        to {
+          -webkit-transform: translate3d(0, 0, 0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes upbit {
+        from {
+          transform: translate3d(0, 30px, 0);
+          opacity: 0.3;
+        }
+        to {
+          transform: translate3d(0, 0, 0);
+          opacity: 1;
+        }
+      }
     </style>
   </head>
+
   <body>
-    <ul class="box">
-      <li class="user">
-        <a href="#">
-          <span>admin</span>
-        </a>
-        <ul class="dropdown-menu">
-          <li>个人中心</li>
-          <li>修改密码</li>
-          <li>退出</li>
+    <div>
+      <div name="select" class="select">
+        <input type="text" value="--请选择--" readonly />
+        <ul>
+          <li data-value="1">给我一首歌的时间</li>
+          <li data-value="2">七里香</li>
+          <li data-value="3">黑色毛衣</li>
+          <li data-value="4">白色风车</li>
         </ul>
-      </li>
-    </ul> 
+      </div>
+      <div>好好学习 天天向上</div>
+    </div>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+      $('[name="select"]').click(function (e) {
+        if ($(this).hasClass('open')) {
+          $(this).removeClass('open')
+          $(this).find('ul').hide()
+        } else {
+          $(this).addClass('open')
+          $(this).find('ul').show()
+        }
+
+        e.stopPropagation() // 阻止冒泡
+      })
+
+      $('[name="select"] li').click(function (e) {
+        var val = $(this).text()
+
+        $(this).parents('[name="select"]').find('input').val(val)
+
+        $('[name="select"] ul').hide()
+        $('[name="select"]').removeClass('open')
+        e.stopPropagation() // 阻止冒泡
+      })
+
+      $(document).click(function () {
+        $('[name="select"]').removeClass('open')
+        $('[name="select"] ul').hide()
+      })
+    </script>
   </body>
 </html>

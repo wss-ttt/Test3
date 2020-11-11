@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>图片懒加载(可视区域加载)</title>
+    <style>
+      * {
+        padding: 0px;
+        margin: 0px;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+      }
+
+      #container {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      #container .in {
+        border: 1px solid red;
+        margin: 10px;
+        text-align: center;
+        height: 400px;
+        width: 400px;
+        float: left;
+      }
+
+      .in img {
+        border: none;
+        vertical-align: middle;
+        height: 400px;
+        width: 400px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul id="container">
+      <li class="in"><img src="" data-imgurl="images/1.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/2.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/3.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/4.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/5.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/6.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/7.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/8.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/9.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/10.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/11.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/12.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/13.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/14.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/15.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/16.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/1.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/2.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/3.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/4.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/5.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/6.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/7.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/8.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/9.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/10.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/11.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/12.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/13.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/14.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/15.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/16.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/1.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/2.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/3.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/4.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/5.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/6.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/7.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/8.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/9.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/10.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/11.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/12.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/13.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/14.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/15.jpg" /></li>
+      <li class="in"><img src="" data-imgurl="images/16.jpg" /></li>
+    </ul>
+    <script type="text/javascript">
+      /* var aImages = document.getElementById('container').getElementsByTagName('img') //获取id为container的文档内所有的图片
+      loadImg(aImages)
+      window.onscroll = function () {
+        //滚动条滚动触发
+        loadImg(aImages)
+      }
+      //getBoundingClientRect 是图片懒加载的核心
+      function loadImg(arr) {
+        for (var i = 0, len = arr.length; i < len; i++) {
+          if (
+            arr[i].getBoundingClientRect().top <
+              document.documentElement.clientHeight &&
+            !arr[i].isLoad
+          ) {
+            arr[i].isLoad = true //图片显示标志位
+            //arr[i].style.cssText = "opacity: 0;";
+            ;(function (i) {
+              setTimeout(function () {
+                if (arr[i].dataset) {
+                  //兼容不支持data的浏览器
+                  aftLoadImg(arr[i], arr[i].dataset.imgurl)
+                } else {
+                  aftLoadImg(arr[i], arr[i].getAttribute('data-imgurl'))
+                }
+                arr[i].style.cssText = 'transition: 1s; opacity: 1;' //相当于fadein
+              }, 500)
+            })(i)
+          }
+        }
+      }
+
+      function aftLoadImg(obj, url) {
+        var oImg = new Image()
+        oImg.onload = function () {
+          obj.src = oImg.src //下载完成后将该图片赋给目标obj目标对象
+        }
+        oImg.src = url //oImg对象先下载该图像
+      }
+     */
+
+      // onload是等所有的资源文件加载完毕以后再绑定事件
+      window.onload = function () {
+        // 获取图片列表，即img标签列表
+        var imgs = document.querySelectorAll('img')
+
+        // 获取到浏览器顶部的距离
+        function getTop(e) {
+          return e.offsetTop
+        }
+
+        // 懒加载实现
+        function lazyload(imgs) {
+          // 可视区域高度
+          var h = window.innerHeight
+          //滚动区域高度
+          var s = document.documentElement.scrollTop || document.body.scrollTop
+          for (var i = 0; i < imgs.length; i++) {
+            //图片距离顶部的距离大于可视区域和滚动区域之和时懒加载
+            if (h + s > getTop(imgs[i])) {
+              // 真实情况是页面开始有2秒空白，所以使用setTimeout定时2s
+              ;(function (i) {
+                setTimeout(function () {
+                  // 不加立即执行函数i会等于9
+                  // 隐形加载图片或其他资源，
+                  //创建一个临时图片，这个图片在内存中不会到页面上去。实现隐形加载
+                  var temp = new Image()
+                  temp.src = imgs[i].getAttribute('data-src') //只会请求一次
+                  // onload判断图片加载完毕，真是图片加载完毕，再赋值给dom节点
+                  temp.onload = function () {
+                    // 获取自定义属性data-src，用真图片替换假图片
+                    imgs[i].src = imgs[i].getAttribute('data-src')
+                  }
+                }, 2000)
+              })(i)
+            }
+          }
+        }
+        lazyload(imgs)
+
+        // 滚屏函数
+        window.onscroll = function () {
+          lazyload(imgs)
+        }
+      }
+    </script>
+  </body>
+</html>

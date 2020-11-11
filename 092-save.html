@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas
+      id="myCanvas"
+      width="1000"
+      height="300"
+      `
+      style="border: 1px solid #d3d3d3; background: #ffffff"
+    >
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <script>
+      var canvas = document.getElementById('myCanvas')
+      var context = canvas.getContext('2d')
+      /**
+       *需求:
+       * 在(100,100)绘制一个(100,100)的矩形,并且旋转起来
+       * 技术点:
+       *  1.需要使用定时器,进行运动
+       */
+      // 1.平移 坐标轴
+      context.translate(150, 150)
+      setInterval(function () {
+        console.log(1)
+        // 2.清除画布
+        context.clearRect(-100, -100, canvas.width, canvas.height)
+        // 3.旋转坐标轴
+        // 每次旋转4度
+        context.rotate((Math.PI / 180) * 4)
+        // 4.绘制图形
+        context.fillRect(-50, -50, 100, 100)
+      }, 50)
+    </script>
+  </body>
+</html>
